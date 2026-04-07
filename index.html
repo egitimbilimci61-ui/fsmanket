@@ -5,149 +5,173 @@ body{font-family:var(--font-sans,sans-serif);color:var(--color-text-primary);bac
 .tab{padding:8px 14px;font-size:13px;cursor:pointer;border:none;background:transparent;color:var(--color-text-secondary);border-bottom:2px solid transparent;margin-bottom:-1px;font-weight:400}
 .tab.active{color:#534AB7;border-bottom:2px solid #7F77DD;font-weight:500}
 .view{display:none}.view.active{display:block}
-.btn-p{background:#7F77DD;color:#fff;border:none;border-radius:var(--border-radius-md);padding:7px 16px;font-size:13px;cursor:pointer;font-weight:500}
+.btn-p{background:#7F77DD;color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:13px;cursor:pointer;font-weight:500}
 .btn-p:hover{background:#534AB7}
-.btn-o{background:transparent;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:7px 13px;font-size:13px;cursor:pointer;color:var(--color-text-secondary)}
+.btn-o{background:transparent;border:0.5px solid #ccc;border-radius:8px;padding:7px 13px;font-size:13px;cursor:pointer;color:var(--color-text-secondary)}
 .btn-o:hover{background:var(--color-background-secondary)}
 .btn-row{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
 .section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .section-title{font-size:15px;font-weight:500}
-.info-box{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:9px 13px;font-size:12px;color:var(--color-text-secondary);margin-bottom:1rem}
+.info-box{background:var(--color-background-secondary);border-radius:8px;padding:9px 13px;font-size:12px;color:var(--color-text-secondary);margin-bottom:1rem}
 .admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;margin-bottom:1rem}
-.admin-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:9px;background:var(--color-background-primary);text-align:center}
+.admin-card{border:0.5px solid #ddd;border-radius:12px;padding:9px;background:var(--color-background-primary);text-align:center}
 .admin-card.has-img{border-color:#AFA9EC}
-.img-box{width:100%;aspect-ratio:1;border-radius:6px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--color-text-tertiary);margin-bottom:4px;cursor:pointer;position:relative}
+.img-box{width:100%;aspect-ratio:1;border-radius:6px;background:var(--color-background-secondary);border:0.5px solid #ddd;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--color-text-tertiary);margin-bottom:4px;cursor:pointer;position:relative}
 .img-box img{width:100%;height:100%;object-fit:contain}
-.img-box .ov{position:absolute;inset:0;background:rgba(83,74,183,0.15);display:none;align-items:center;justify-content:center;font-size:11px;color:#534AB7;font-weight:500}
-.img-box:hover .ov{display:flex}
+.img-box:hover .ov{display:flex!important}
 .img-type{font-size:10px;color:var(--color-text-tertiary);margin-bottom:3px}
-.logo-name-input{width:100%;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:4px 7px;font-size:12px;margin-top:4px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.logo-name-input{width:100%;border:0.5px solid #ccc;border-radius:8px;padding:4px 7px;font-size:12px;margin-top:4px;background:var(--color-background-primary);color:var(--color-text-primary)}
 .del-btn{font-size:11px;color:#A32D2D;background:transparent;border:none;cursor:pointer;padding:2px 4px;margin-top:3px}
-.del-btn:hover{text-decoration:underline}
 .logo-count-row{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
-.count-btn{width:28px;height:28px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;cursor:pointer;font-size:16px;color:var(--color-text-primary);display:flex;align-items:center;justify-content:center}
+.count-btn{width:28px;height:28px;border:0.5px solid #ccc;border-radius:8px;background:transparent;cursor:pointer;font-size:16px;color:var(--color-text-primary);display:flex;align-items:center;justify-content:center;line-height:1}
 .count-btn:hover{background:var(--color-background-secondary)}
 .count-val{font-size:15px;font-weight:500;min-width:24px;text-align:center}
 .toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
-.toggle{position:relative;width:40px;height:22px}
-.toggle input{opacity:0;width:0;height:0}
-.toggle-slider{position:absolute;inset:0;background:var(--color-border-secondary);border-radius:11px;cursor:pointer;transition:.2s}
-.toggle-slider:before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s}
-.toggle input:checked+.toggle-slider{background:#7F77DD}
-.toggle input:checked+.toggle-slider:before{transform:translateX(18px)}
-.toggle-label{font-size:13px;color:var(--color-text-secondary)}
+.toggle{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.tslider{position:absolute;inset:0;background:#ccc;border-radius:11px;cursor:pointer;transition:.2s}
+.tslider:before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s}
+.toggle input:checked + .tslider{background:#7F77DD}
+.toggle input:checked + .tslider:before{transform:translateX(18px)}
 .pass-row{display:flex;gap:8px;margin-bottom:1rem;align-items:center}
-.pass-row input{flex:1;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:7px 10px;font-size:13px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.pass-row input{flex:1;border:0.5px solid #ccc;border-radius:8px;padding:7px 10px;font-size:13px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.lock-wrap{min-height:260px;display:flex;align-items:center;justify-content:center}
+.lock-card{background:var(--color-background-primary);border:0.5px solid #ddd;border-radius:12px;padding:2rem;text-align:center;max-width:300px;width:100%}
+.lock-card h2{font-size:17px;font-weight:500;margin-bottom:.4rem}
+.lock-card p{font-size:13px;color:var(--color-text-secondary);margin-bottom:1rem}
+.lock-card input{width:100%;border:0.5px solid #ccc;border-radius:8px;padding:9px 12px;font-size:14px;background:var(--color-background-primary);color:var(--color-text-primary);text-align:center;margin-bottom:.6rem}
+.err-msg{font-size:12px;color:#A32D2D;margin-bottom:.6rem;display:none}
 h1{font-size:20px;font-weight:500;margin-bottom:4px;text-align:center}
 .subtitle{font-size:13px;color:var(--color-text-secondary);text-align:center;margin-bottom:1.5rem}
 .step{display:none}.step.active{display:block}
-.progress-bar{width:100%;height:4px;background:var(--color-border-tertiary);border-radius:4px;margin-bottom:1.5rem}
+.progress-bar{width:100%;height:4px;background:#eee;border-radius:4px;margin-bottom:1.5rem}
 .progress-fill{height:4px;border-radius:4px;background:#7F77DD;transition:width .4s}
 .step-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:1.5rem;text-align:right}
 .question{font-size:16px;font-weight:500;margin-bottom:1rem}
 .options{display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem}
-.opt-btn{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:10px 14px;font-size:14px;color:var(--color-text-primary);cursor:pointer;text-align:left;transition:all .15s}
+.opt-btn{background:var(--color-background-primary);border:0.5px solid #ccc;border-radius:8px;padding:10px 14px;font-size:14px;color:var(--color-text-primary);cursor:pointer;text-align:left;transition:all .15s}
 .opt-btn:hover{background:var(--color-background-secondary)}
 .opt-btn.selected{border:1.5px solid #7F77DD;background:#EEEDFE;color:#3C3489}
 .logo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:1.5rem}
-.logo-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:9px;cursor:pointer;text-align:center;transition:all .15s;background:var(--color-background-primary)}
+.logo-card{border:0.5px solid #ddd;border-radius:12px;padding:9px;cursor:pointer;text-align:center;background:var(--color-background-primary);transition:all .15s}
 .logo-card:hover{border-color:#AFA9EC}
 .logo-card.selected{border:1.5px solid #7F77DD;background:#EEEDFE}
-.logo-card .lc-img{width:100%;aspect-ratio:1;border-radius:6px;overflow:hidden;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--color-text-tertiary)}
-.logo-card .lc-img img{width:100%;height:100%;object-fit:contain}
-.logo-card .lc-name{font-size:12px;font-weight:500;margin-top:5px}
-.cmp-area{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;margin-bottom:1.5rem;align-items:center}
-.cmp-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px;text-align:center;cursor:pointer;background:var(--color-background-primary);transition:all .15s}
+.lc-img{width:100%;aspect-ratio:1;border-radius:6px;overflow:hidden;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--color-text-tertiary)}
+.lc-img img{width:100%;height:100%;object-fit:contain}
+.lc-name{font-size:12px;font-weight:500;margin-top:5px}
+.cmp-outer{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;margin-bottom:.5rem;align-items:center}
+.cmp-card{border:0.5px solid #ddd;border-radius:12px;padding:10px;text-align:center;cursor:pointer;background:var(--color-background-primary);transition:all .15s}
 .cmp-card:hover{border-color:#AFA9EC}
-.cmp-card.selected{border:2px solid #7F77DD;background:#EEEDFE}
-.cmp-img{width:100%;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--color-text-tertiary);margin-bottom:6px}
+.cmp-card.win{border:2px solid #7F77DD;background:#EEEDFE}
+.cmp-card.lose{opacity:.35}
+.cmp-img{width:100%;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--color-text-tertiary);margin-bottom:5px}
 .cmp-img img{width:100%;height:100%;object-fit:contain}
-.vs-badge{text-align:center;font-size:13px;font-weight:500;color:var(--color-text-tertiary)}
-.cmp-progress{font-size:12px;color:var(--color-text-secondary);margin-bottom:12px;text-align:center}
+.vs{text-align:center;font-size:12px;font-weight:500;color:var(--color-text-tertiary)}
+.cmp-prog{font-size:12px;color:var(--color-text-secondary);text-align:center;margin-bottom:10px}
+.skip-btn{font-size:12px;color:var(--color-text-secondary);background:transparent;border:none;cursor:pointer;text-decoration:underline;display:block;margin:4px auto 10px}
 .star-row{display:flex;gap:8px;margin-bottom:1.5rem}
-.star{font-size:26px;cursor:pointer;filter:grayscale(1);transition:filter .1s;user-select:none}
-.star.lit{filter:none}
-textarea{width:100%;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:10px;font-size:14px;resize:vertical;min-height:68px;background:var(--color-background-primary);color:var(--color-text-primary)}
-button.next{background:#7F77DD;color:#fff;border:none;border-radius:var(--border-radius-md);padding:9px 20px;font-size:14px;cursor:pointer;font-weight:500}
-button.next:hover{background:#534AB7}
-button.next:disabled{background:var(--color-border-tertiary);color:var(--color-text-tertiary);cursor:not-allowed}
-button.back-btn{background:transparent;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:9px 16px;font-size:14px;cursor:pointer;color:var(--color-text-secondary)}
-.result-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:12px}
-.result-title{font-size:12px;font-weight:500;margin-bottom:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em}
-.winner-box{background:#EEEDFE;border-radius:var(--border-radius-lg);padding:1rem;display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.winner-img{width:56px;height:56px;border-radius:8px;overflow:hidden;background:#fff;border:0.5px solid #AFA9EC;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.star{font-size:26px;cursor:pointer;color:#ddd;transition:color .1s;user-select:none}
+.star.lit{color:#F0A500}
+textarea{width:100%;border:0.5px solid #ccc;border-radius:8px;padding:10px;font-size:14px;resize:vertical;min-height:68px;background:var(--color-background-primary);color:var(--color-text-primary)}
+button.nxt{background:#7F77DD;color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:14px;cursor:pointer;font-weight:500}
+button.nxt:hover{background:#534AB7}
+button.nxt:disabled{background:#ddd;color:#aaa;cursor:not-allowed}
+button.back-btn{background:transparent;border:0.5px solid #ccc;border-radius:8px;padding:9px 16px;font-size:14px;cursor:pointer;color:var(--color-text-secondary)}
+.result-card{background:var(--color-background-primary);border:0.5px solid #ddd;border-radius:12px;padding:1rem 1.25rem;margin-bottom:12px}
+.result-title{font-size:11px;font-weight:500;margin-bottom:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em}
+.winner-box{background:#EEEDFE;border-radius:12px;padding:1rem;display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.winner-img{width:52px;height:52px;border-radius:8px;overflow:hidden;background:#fff;border:0.5px solid #AFA9EC;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .winner-img img{width:100%;height:100%;object-fit:contain}
-.w-label{font-size:11px;color:#534AB7}
-.w-logo{font-size:16px;font-weight:500;color:#3C3489}
 .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
-.metric{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center}
-.metric .m-label{font-size:10px;color:var(--color-text-secondary)}
-.metric .m-val{font-size:18px;font-weight:500;margin-top:2px}
-canvas{width:100%!important;max-height:220px}
-.comment-item{padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.metric{background:var(--color-background-secondary);border-radius:8px;padding:10px;text-align:center}
+.metric .ml{font-size:10px;color:var(--color-text-secondary)}
+.metric .mv{font-size:18px;font-weight:500;margin-top:2px}
+canvas{width:100%!important;max-height:240px}
+.logo-detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-bottom:10px}
+.lsc{border:0.5px solid #ddd;border-radius:12px;padding:7px;text-align:center;cursor:pointer;background:var(--color-background-primary);transition:all .15s}
+.lsc:hover{border-color:#7F77DD;background:#EEEDFE}
+.lsc.active{border:1.5px solid #7F77DD;background:#EEEDFE}
+.lsc-img{width:100%;aspect-ratio:1;border-radius:6px;overflow:hidden;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--color-text-tertiary);margin-bottom:3px}
+.lsc-img img{width:100%;height:100%;object-fit:contain}
+.lsc-name{font-size:11px;font-weight:500;color:var(--color-text-primary)}
+.lsc-v{font-size:11px;color:#534AB7}
+.detail-panel{background:var(--color-background-secondary);border-radius:12px;padding:1rem;margin-top:8px}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.bar-lbl{font-size:12px;color:var(--color-text-secondary);min-width:80px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{flex:1;height:7px;background:#eee;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;background:#7F77DD;transition:width .5s}
+.bar-pct{font-size:12px;font-weight:500;color:#534AB7;min-width:34px;text-align:right}
+.comment-item{padding:7px 0;border-bottom:0.5px solid #eee;font-size:13px}
 .comment-item:last-child{border-bottom:none}
 .comment-meta{font-size:11px;color:var(--color-text-secondary);margin-bottom:2px}
-.lock-screen{text-align:center;padding:2rem 1rem}
-.lock-screen h2{font-size:17px;font-weight:500;margin-bottom:.5rem}
-.lock-screen p{font-size:13px;color:var(--color-text-secondary);margin-bottom:1rem}
-.lock-screen input{border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:9px 12px;font-size:14px;background:var(--color-background-primary);color:var(--color-text-primary);width:200px;text-align:center;display:block;margin:0 auto 1rem}
-.err{font-size:12px;color:#A32D2D;text-align:center;margin-top:-8px;margin-bottom:8px}
-.lang-row{display:flex;gap:6px;margin-bottom:1rem}
-.lang-btn{padding:5px 12px;font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;cursor:pointer;color:var(--color-text-secondary)}
-.lang-btn.active{background:#EEEDFE;color:#534AB7;border-color:#AFA9EC}
-.closed-msg{text-align:center;padding:3rem 1rem}
-.closed-msg h2{font-size:18px;font-weight:500;margin-bottom:.5rem}
-.closed-msg p{font-size:14px;color:var(--color-text-secondary)}
-.fb-status{font-size:11px;padding:4px 10px;border-radius:10px;display:inline-flex;align-items:center;gap:5px;margin-bottom:1rem}
-.fb-status.ok{background:#EAF3DE;color:#3B6D11}
-.fb-status.err{background:#FCEBEB;color:#A32D2D}
-.fb-status.loading{background:var(--color-background-secondary);color:var(--color-text-secondary)}
-.dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
-.live-badge{font-size:10px;background:#EAF3DE;color:#3B6D11;padding:2px 7px;border-radius:8px;margin-left:6px}
+.live-badge{font-size:10px;background:#EAF3DE;color:#3B6D11;padding:2px 7px;border-radius:8px;margin-left:4px}
+.fb-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#3B6D11;margin-right:4px}
+.status-bar{font-size:11px;color:var(--color-text-secondary);margin-bottom:1rem;display:flex;align-items:center;gap:4px}
+.overlay-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;align-items:center;justify-content:center}
 </style>
 
+<!-- ADMIN LOCK OVERLAY -->
+<div class="overlay-bg" id="admin-overlay">
+  <div class="lock-card">
+    <h2>Yönetim Paneli</h2>
+    <p>Yönetici şifresini girin.</p>
+    <input type="password" id="admin-pass-inp" placeholder="Şifre" onkeydown="if(event.key==='Enter')chkAdmin()">
+    <div class="err-msg" id="admin-err">Yanlış şifre.</div>
+    <div style="display:flex;gap:8px;justify-content:center">
+      <button class="btn-o" onclick="closeOverlay('admin-overlay')">İptal</button>
+      <button class="btn-p" onclick="chkAdmin()">Gir</button>
+    </div>
+  </div>
+</div>
+
 <div class="tab-bar">
-  <button class="tab active" onclick="switchTab('admin')">Yönetim</button>
-  <button class="tab" onclick="switchTab('poll')">Anket</button>
-  <button class="tab" onclick="switchTab('results')">Sonuçlar <span class="live-badge">CANLI</span></button>
+  <button class="tab" id="tab-admin" onclick="tryAdmin()">Yönetim</button>
+  <button class="tab active" id="tab-poll" onclick="switchTab('poll')">Anket</button>
+  <button class="tab" id="tab-results" onclick="switchTab('results')">Sonuçlar <span class="live-badge">CANLI</span></button>
 </div>
 
 <!-- ADMIN -->
-<div class="view active" id="view-admin">
-  <div id="fb-status-box" class="fb-status loading"><div class="dot"></div><span>Firebase bağlanıyor...</span></div>
-  <div class="info-box">Logolar ve ayarlar Firebase'e kaydedilir. Tüm cihazlarda senkronize çalışır.</div>
+<div class="view" id="view-admin">
+  <div class="status-bar" id="fb-status"><span class="fb-dot" style="background:#aaa"></span>Bağlanıyor...</div>
+  <div class="info-box">Ayarlar ve logolar Firebase'e kaydedilir. Tüm değişikliklerden sonra "Kaydet"e basın.</div>
 
   <div class="section-hd" style="margin-bottom:8px"><span class="section-title">Dil</span></div>
-  <div class="lang-row">
-    <button class="lang-btn active" id="lb-tr" onclick="setLang('tr')">Türkçe</button>
-    <button class="lang-btn" id="lb-en" onclick="setLang('en')">English</button>
+  <div style="display:flex;gap:6px;margin-bottom:1rem">
+    <button class="btn-o" id="lb-tr" onclick="setLang('tr')" style="border-color:#7F77DD;color:#534AB7">Türkçe</button>
+    <button class="btn-o" id="lb-en" onclick="setLang('en')">English</button>
   </div>
 
   <div class="section-hd" style="margin-bottom:8px"><span class="section-title">Anket Durumu</span></div>
   <div class="toggle-row">
-    <label class="toggle"><input type="checkbox" id="poll-open" checked onchange="cfg.pollOpen=this.checked;saveCfg()"><span class="toggle-slider"></span></label>
-    <span class="toggle-label" id="poll-status-lbl">Anket açık</span>
+    <label class="toggle"><input type="checkbox" id="poll-open-chk" checked onchange="cfg.pollOpen=this.checked"><span class="tslider"></span></label>
+    <span id="poll-status-lbl" style="font-size:13px;color:var(--color-text-secondary)">Anket açık</span>
   </div>
 
-  <div class="section-hd" style="margin-bottom:8px"><span class="section-title">Sonuç Şifresi</span></div>
+  <div class="section-hd" style="margin-bottom:8px"><span class="section-title">Yönetici Şifresi</span></div>
   <div class="pass-row">
-    <input type="password" id="pass-input" placeholder="Şifre belirle (boş = şifresiz)">
-    <button class="btn-p" onclick="savePass()">Kaydet</button>
+    <input type="password" id="admin-pass-set" placeholder="Yönetici şifresi">
+    <button class="btn-p" onclick="saveAdminPass()">Kaydet</button>
+  </div>
+
+  <div class="section-hd" style="margin-bottom:8px"><span class="section-title">Sonuç Şifresi <span style="font-size:11px;font-weight:400">(opsiyonel)</span></span></div>
+  <div class="pass-row">
+    <input type="password" id="res-pass-set" placeholder="Boş = şifresiz">
+    <button class="btn-p" onclick="saveResPass()">Kaydet</button>
   </div>
 
   <div class="section-hd"><span class="section-title">Logo Sayısı</span></div>
   <div class="logo-count-row">
-    <button class="count-btn" onclick="changeCount(-1)">−</button>
+    <button class="count-btn" onclick="chgCount(-1)">−</button>
     <span class="count-val" id="cnt-val">10</span>
-    <button class="count-btn" onclick="changeCount(1)">+</button>
+    <button class="count-btn" onclick="chgCount(1)">+</button>
     <span style="font-size:12px;color:var(--color-text-secondary)">logo (2–20)</span>
   </div>
 
   <div class="section-hd">
     <span class="section-title">Logo Görselleri</span>
     <div style="display:flex;gap:6px">
-      <button class="btn-o" onclick="clearAllLogos()">Temizle</button>
-      <button class="btn-p" id="save-btn" onclick="saveAdmin()">Firebase'e Kaydet</button>
+      <button class="btn-o" onclick="clearAll()">Temizle</button>
+      <button class="btn-p" id="save-btn" onclick="saveAdmin()">Kaydet</button>
     </div>
   </div>
   <div class="admin-grid" id="admin-grid"></div>
@@ -156,62 +180,51 @@ canvas{width:100%!important;max-height:220px}
   <div class="section-hd"><span class="section-title">Veri</span></div>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
     <button class="btn-o" onclick="exportCSV()">CSV İndir</button>
-    <button class="btn-o" style="color:#A32D2D" onclick="if(confirm('Tüm oylar silinsin mi?')){clearVotes()}">Oyları Sıfırla</button>
+    <button class="btn-o" style="color:#A32D2D" onclick="if(confirm('Tüm oylar silinsin mi?'))clearVotes()">Oyları Sıfırla</button>
   </div>
 </div>
 
 <!-- POLL -->
-<div class="view" id="view-poll">
-  <div id="poll-closed-msg" style="display:none" class="closed-msg">
-    <h2 id="closed-h">Anket Kapalı</h2>
-    <p id="closed-p">Bu anket şu anda aktif değil.</p>
+<div class="view active" id="view-poll">
+  <div id="poll-closed-box" style="display:none;text-align:center;padding:3rem 1rem">
+    <h2 id="closed-h" style="font-size:18px;font-weight:500;margin-bottom:.5rem">Anket Kapalı</h2>
+    <p id="closed-p" style="font-size:14px;color:var(--color-text-secondary)">Bu anket şu anda aktif değil.</p>
   </div>
   <div id="poll-inner">
     <h1 id="poll-title">Okul Logosu Anketi</h1>
     <p class="subtitle" id="poll-sub">Logonu seç, sesini duyur!</p>
-    <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:14%"></div></div>
     <div class="step-label" id="step-lbl">Adım 1 / 7</div>
 
     <div class="step active" id="s1">
-      <p class="question" id="q-gender">Cinsiyetin nedir?</p>
+      <p class="question">Cinsiyetin nedir?</p>
       <div class="options" id="opts-gender"></div>
-      <div class="btn-row"><button class="next" id="n1" onclick="go(2)" disabled>Devam</button></div>
+      <div class="btn-row"><button class="nxt" id="n1" onclick="go(2)" disabled>Devam</button></div>
     </div>
     <div class="step" id="s2">
-      <p class="question" id="q-class">Kaçıncı sınıftasın?</p>
+      <p class="question">Kaçıncı sınıftasın?</p>
       <div class="options" id="opts-class"></div>
-      <div class="btn-row">
-        <button class="back-btn" onclick="go(1)">Geri</button>
-        <button class="next" id="n2" onclick="go(3)" disabled>Devam</button>
-      </div>
+      <div class="btn-row"><button class="back-btn" onclick="go(1)">Geri</button><button class="nxt" id="n2" onclick="go(3)" disabled>Devam</button></div>
     </div>
     <div class="step" id="s3">
-      <p class="question" id="q-pick">En beğendiğin logoyu seç</p>
-      <div class="logo-grid" id="poll-logo-grid"></div>
-      <div class="btn-row">
-        <button class="back-btn" onclick="go(2)">Geri</button>
-        <button class="next" id="n3" onclick="go(4)" disabled>Devam</button>
-      </div>
+      <p class="question" id="q-cmp">İkisinden hangisini tercih edersin?</p>
+      <p class="cmp-prog" id="cmp-prog"></p>
+      <div class="cmp-outer" id="cmp-area"></div>
+      <button class="skip-btn" onclick="skipCmp()">Emin değilim, geç</button>
+      <div class="btn-row"><button class="back-btn" onclick="go(2)">Geri</button><button class="nxt" id="n3" onclick="go(4)" disabled>Devam</button></div>
     </div>
     <div class="step" id="s4">
-      <p class="question" id="q-compare">İkisinden hangisini tercih edersin?</p>
-      <p class="cmp-progress" id="cmp-prog"></p>
-      <div class="cmp-area" id="cmp-area"></div>
-      <div class="btn-row">
-        <button class="back-btn" onclick="go(3)">Geri</button>
-        <button class="next" id="n4" onclick="go(5)" disabled>Devam</button>
-      </div>
+      <p class="question">En beğendiğin logoyu seç</p>
+      <div class="logo-grid" id="poll-logo-grid"></div>
+      <div class="btn-row"><button class="back-btn" onclick="go(3)">Geri</button><button class="nxt" id="n4" onclick="go(5)" disabled>Devam</button></div>
     </div>
     <div class="step" id="s5">
-      <p class="question" id="q-reason">Bu logoyu seçmendeki en önemli neden?</p>
+      <p class="question">Bu logoyu seçmendeki en önemli neden?</p>
       <div class="options" id="opts-reason"></div>
-      <div class="btn-row">
-        <button class="back-btn" onclick="go(4)">Geri</button>
-        <button class="next" id="n5" onclick="go(6)" disabled>Devam</button>
-      </div>
+      <div class="btn-row"><button class="back-btn" onclick="go(4)">Geri</button><button class="nxt" id="n5" onclick="go(6)" disabled>Devam</button></div>
     </div>
     <div class="step" id="s6">
-      <p class="question" id="q-star">Seçtiğin logoya kaç yıldız verirsin?</p>
+      <p class="question">Seçtiğin logoya kaç yıldız verirsin?</p>
       <div class="star-row" id="stars">
         <span class="star" onclick="rateStar(1)">&#9733;</span>
         <span class="star" onclick="rateStar(2)">&#9733;</span>
@@ -219,16 +232,13 @@ canvas{width:100%!important;max-height:220px}
         <span class="star" onclick="rateStar(4)">&#9733;</span>
         <span class="star" onclick="rateStar(5)">&#9733;</span>
       </div>
-      <p class="question" id="q-comment" style="margin-top:.5rem">Eklemek istediğin bir şey? <span style="font-size:13px;font-weight:400;color:var(--color-text-secondary)">(isteğe bağlı)</span></p>
+      <p class="question" style="font-size:14px">Eklemek istediğin bir şey? <span style="font-weight:400;color:var(--color-text-secondary)">(isteğe bağlı)</span></p>
       <textarea id="yorum" placeholder="Görüşünü yaz..."></textarea>
-      <div class="btn-row">
-        <button class="back-btn" onclick="go(5)">Geri</button>
-        <button class="next" id="n6" onclick="submitPoll()" disabled>Gönder</button>
-      </div>
+      <div class="btn-row"><button class="back-btn" onclick="go(5)">Geri</button><button class="nxt" id="n6" onclick="submitPoll()" disabled>Gönder</button></div>
     </div>
     <div class="step" id="s7">
       <p class="question" style="text-align:center;margin-bottom:.5rem">Teşekkürler!</p>
-      <p style="text-align:center;font-size:14px;color:var(--color-text-secondary);margin-bottom:1.5rem">Oyun kaydedildi. Tüm katılımcıların sonuçlarını görebilirsin.</p>
+      <p style="text-align:center;font-size:14px;color:var(--color-text-secondary);margin-bottom:1.5rem">Oyun kaydedildi.</p>
       <div class="btn-row" style="justify-content:center;gap:10px">
         <button class="btn-o" onclick="resetPoll()">Yeni Anket</button>
         <button class="btn-p" onclick="switchTab('results')">Sonuçları Gör</button>
@@ -239,305 +249,497 @@ canvas{width:100%!important;max-height:220px}
 
 <!-- RESULTS -->
 <div class="view" id="view-results">
-  <div id="lock-screen" class="lock-screen" style="display:none">
-    <h2>Sonuçlar Korumalı</h2>
-    <p>Devam etmek için şifreyi girin.</p>
-    <input type="password" id="lock-pass" placeholder="Şifre" onkeydown="if(event.key==='Enter')checkPass()">
-    <div class="err" id="lock-err" style="display:none">Yanlış şifre.</div>
-    <button class="btn-p" onclick="checkPass()">Gir</button>
+  <div class="lock-wrap" id="res-lock-wrap" style="display:none">
+    <div class="lock-card">
+      <h2>Sonuçlar Korumalı</h2>
+      <p>Şifreyi girin.</p>
+      <input type="password" id="res-lock-inp" placeholder="Şifre" onkeydown="if(event.key==='Enter')chkRes()">
+      <div class="err-msg" id="res-err">Yanlış şifre.</div>
+      <button class="btn-p" onclick="chkRes()" style="margin-top:.5rem">Gir</button>
+    </div>
   </div>
   <div id="results-inner"></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-<script type="module">
-import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import{getFirestore,doc,getDoc,setDoc,addDoc,collection,onSnapshot,deleteDoc,getDocs}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-
-const fbCfg={apiKey:"AIzaSyCJMoseVi5ZLELeIv413Uv00lUPkPXgmsQ",authDomain:"okul-logo-anketi.firebaseapp.com",projectId:"okul-logo-anketi",storageBucket:"okul-logo-anketi.firebasestorage.app",messagingSenderId:"251108485343",appId:"1:251108485343:web:5c1bcf1dcb905fde74e16a"};
-const app=initializeApp(fbCfg);
-const db=getFirestore(app);
-
-var logos=[],votes=[],cfg={pollOpen:true,lang:'tr',pass:'',logoCount:10};
+<script>
+var FB_URL='https://firestore.googleapis.com/v1/projects/okul-logo-anketi/databases/(default)/documents';
+var logos=[],votes=[],cfg={pollOpen:true,lang:'tr',pass:'',adminPass:'admin123',logoCount:10};
 var pdata={cinsiyet:null,sinif:null,logo:null,neden:null,yildiz:0,cmpWins:{}};
-var cmpPairs=[],cmpIdx=0;
-var resultsUnlocked=false;
-var charts={};
-var TOTAL_STEPS=7;
+var cmpPairs=[],cmpIdx=0,adminOK=false,resOK=false,charts={},selLogo=null;
+var STEPS=7;
 
-function setFbStatus(state,msg){
-  var el=document.getElementById('fb-status-box');
-  el.className='fb-status '+state;
-  el.innerHTML='<div class="dot"></div><span>'+msg+'</span>';
+/* ---- FIRESTORE REST ---- */
+function fbGet(path){return fetch(FB_URL+'/'+path).then(function(r){return r.json();});}
+function fbSet(path,fields){return fetch(FB_URL+'/'+path+'?updateMask.fieldPaths='+Object.keys(fields).join('&updateMask.fieldPaths='),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:fields})}).then(function(r){return r.json();});}
+function fbAdd(col,fields){return fetch(FB_URL+'/'+col,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:fields})}).then(function(r){return r.json();});}
+function fbDel(path){return fetch(FB_URL+'/'+path,{method:'DELETE'});}
+function fbList(col){return fetch(FB_URL+'/'+col).then(function(r){return r.json();});}
+
+function toFs(obj){
+  var f={};
+  Object.entries(obj).forEach(function(e){
+    var v=e[1];
+    if(v===null||v===undefined) f[e[0]]={nullValue:null};
+    else if(typeof v==='boolean') f[e[0]]={booleanValue:v};
+    else if(typeof v==='number') f[e[0]]={integerValue:String(v)};
+    else if(typeof v==='string') f[e[0]]={stringValue:v};
+    else if(Array.isArray(v)) f[e[0]]={stringValue:JSON.stringify(v)};
+    else f[e[0]]={stringValue:JSON.stringify(v)};
+  });
+  return f;
+}
+function fromFs(fields){
+  var o={};
+  if(!fields)return o;
+  Object.entries(fields).forEach(function(e){
+    var v=e[1];
+    if(v.stringValue!==undefined) o[e[0]]=v.stringValue;
+    else if(v.integerValue!==undefined) o[e[0]]=Number(v.integerValue);
+    else if(v.booleanValue!==undefined) o[e[0]]=v.booleanValue;
+    else if(v.nullValue!==undefined) o[e[0]]=null;
+  });
+  return o;
 }
 
-async function loadFromFirebase(){
+function setStatus(ok,msg){
+  var el=document.getElementById('fb-status');
+  el.innerHTML='<span class="fb-dot" style="background:'+(ok?'#3B6D11':'#A32D2D')+'"></span>'+msg;
+}
+
+async function loadCfg(){
   try{
-    var cfgSnap=await getDoc(doc(db,'config','main'));
-    if(cfgSnap.exists()){var d=cfgSnap.data();cfg.pollOpen=d.pollOpen!==undefined?d.pollOpen:true;cfg.lang=d.lang||'tr';cfg.pass=d.pass||'';cfg.logoCount=d.logoCount||10;}
-    var logoSnap=await getDoc(doc(db,'config','logos'));
-    if(logoSnap.exists()&&logoSnap.data().list){logos=logoSnap.data().list;}
+    var r=await fbGet('config/main');
+    if(r.fields){
+      var d=fromFs(r.fields);
+      cfg.pollOpen=d.pollOpen!==undefined?d.pollOpen:true;
+      cfg.lang=d.lang||'tr';cfg.pass=d.pass||'';
+      cfg.adminPass=d.adminPass||'admin123';cfg.logoCount=d.logoCount||10;
+    }
+    var lr=await fbGet('config/logos');
+    if(lr.fields&&lr.fields.list){
+      try{logos=JSON.parse(lr.fields.list.stringValue);}catch(e){logos=[];}
+    }
     while(logos.length<cfg.logoCount)logos.push({name:'Logo '+(logos.length+1),img:null,formaImg:null});
     logos=logos.slice(0,cfg.logoCount);
-    setFbStatus('ok','Firebase bağlı');
-    buildAdminGrid();applyLang();
-  }catch(e){setFbStatus('err','Bağlantı hatası: '+e.message);}
+    setStatus(true,'Firebase bağlı');
+  }catch(e){setStatus(false,'Bağlantı hatası');}
 }
 
-async function saveCfg(){
-  try{await setDoc(doc(db,'config','main'),cfg);}catch(e){console.error(e);}
-  document.getElementById('poll-status-lbl').textContent=cfg.pollOpen?'Anket açık — öğrenciler oy kullanabilir':'Anket kapalı — yeni oy alınmıyor';
-  document.getElementById('poll-open').checked=cfg.pollOpen;
+async function saveCfgFb(){
+  await fbSet('config/main',toFs({pollOpen:cfg.pollOpen,lang:cfg.lang,pass:cfg.pass,adminPass:cfg.adminPass,logoCount:cfg.logoCount}));
+  updatePollStatus();
 }
-
-async function saveLogos(){
-  try{await setDoc(doc(db,'config','logos'),{list:logos});}catch(e){console.error(e);}
+async function saveLogosFb(){
+  await fbSet('config/logos',{list:{stringValue:JSON.stringify(logos)}});
 }
-
-async function addVote(v){
-  try{await addDoc(collection(db,'votes'),v);return true;}catch(e){console.error(e);return false;}
+async function addVoteFb(v){
+  return fbAdd('votes',toFs(v));
 }
-
-async function clearVotes(){
+async function loadVotes(){
   try{
-    var snap=await getDocs(collection(db,'votes'));
-    for(var d of snap.docs) await deleteDoc(doc(db,'votes',d.id));
-    votes=[];renderResults();
-  }catch(e){alert('Hata: '+e.message);}
+    var r=await fbList('votes');
+    if(r.documents){votes=r.documents.map(function(d){return fromFs(d.fields);});}
+    else votes=[];
+  }catch(e){votes=[];}
 }
 
-function listenVotes(){
-  onSnapshot(collection(db,'votes'),function(snap){
-    votes=snap.docs.map(function(d){return d.data()});
-    var ri=document.getElementById('results-inner');
-    if(ri&&ri.innerHTML&&document.getElementById('view-results').classList.contains('active')) renderResults();
+/* poll every 15s for live results */
+function startLive(){
+  setInterval(async function(){
+    if(document.getElementById('view-results').classList.contains('active')){
+      await loadVotes();renderResults();
+    }
+  },15000);
+}
+
+/* ---- TABS ---- */
+function switchTab(t){
+  ['admin','poll','results'].forEach(function(n,i){
+    document.getElementById('tab-'+n).classList.toggle('active',n===t);
+    document.getElementById('view-'+n).classList.toggle('active',n===t);
   });
+  if(t==='poll'){applyLang();buildPollGrid();}
+  if(t==='results'){loadVotes().then(openResults);}
 }
 
-window.switchTab=function(tab){
-  document.querySelectorAll('.tab').forEach(function(b,i){b.classList.toggle('active',['admin','poll','results'][i]===tab)});
-  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active')});
-  document.getElementById('view-'+tab).classList.add('active');
-  if(tab==='poll'){applyLang();buildPollGrid();}
-  if(tab==='results') openResults();
-};
+function tryAdmin(){
+  if(adminOK){switchTab('admin');return;}
+  document.getElementById('admin-pass-inp').value='';
+  document.getElementById('admin-err').style.display='none';
+  document.getElementById('admin-overlay').style.display='flex';
+}
+function chkAdmin(){
+  if(document.getElementById('admin-pass-inp').value===cfg.adminPass){
+    adminOK=true;closeOverlay('admin-overlay');switchTab('admin');buildAdminGrid();
+  }else document.getElementById('admin-err').style.display='block';
+}
+function closeOverlay(id){document.getElementById(id).style.display='none';}
 
-window.setLang=function(l){cfg.lang=l;saveCfg();document.getElementById('lb-tr').classList.toggle('active',l==='tr');document.getElementById('lb-en').classList.toggle('active',l==='en');};
-
+/* ---- LANG ---- */
 var T={
-  tr:{title:'Okul Logosu Anketi',sub:'Logonu seç, sesini duyur!',qGender:'Cinsiyetin nedir?',gOpts:['Kız','Erkek','Belirtmek istemiyorum'],qClass:'Kaçıncı sınıftasın?',cOpts:['9. Sınıf','10. Sınıf','11. Sınıf','12. Sınıf'],qPick:'En beğendiğin logoyu seç',qCompare:'İkisinden hangisini tercih edersin?',qReason:'Seçimindeki en önemli neden?',rOpts:['Renk uyumu','Sadelik ve temizlik','Anlam ve sembol','Modern görünüm','Forma üzerindeki duruşu'],qStar:'Kaç yıldız verirsin?',next:'Devam',back:'Geri',cmpProg:'{a} / {b} karşılaştırma',stepOf:'Adım {a} / {b}',winner:'En çok oy alan logo',votes2:'oy',total:'Toplam Katılımcı',avg:'Ortalama Puan',cmpScore:'Karşılaştırma Lideri',logoDist:'Logo Oy Dağılımı',genderDist:'Cinsiyete Göre',classDist:'Sınıfa Göre',reasonDist:'Tercih Nedenleri',cmpDist:'Karşılaştırma',comments:'Yorumlar',noVotes:'Henüz oy yok.',closed:'Anket Kapalı',closedSub:'Bu anket şu anda aktif değil.'},
-  en:{title:'School Logo Survey',sub:'Pick your logo!',qGender:'What is your gender?',gOpts:['Girl','Boy','Prefer not to say'],qClass:'What grade are you in?',cOpts:['9th','10th','11th','12th'],qPick:'Which logo do you like most?',qCompare:'Which do you prefer?',qReason:'Main reason for your choice?',rOpts:['Color harmony','Simplicity','Meaning','Modern look','Uniform appearance'],qStar:'How many stars?',next:'Next',back:'Back',cmpProg:'{a} / {b} comparisons',stepOf:'Step {a} / {b}',winner:'Most voted logo',votes2:'votes',total:'Total Participants',avg:'Average Rating',cmpScore:'Comparison Leader',logoDist:'Logo Votes',genderDist:'By Gender',classDist:'By Grade',reasonDist:'Reasons',cmpDist:'Comparison',comments:'Comments',noVotes:'No votes yet.',closed:'Survey Closed',closedSub:'This survey is not active.'}
+  tr:{gOpts:['Kız','Erkek','Belirtmek istemiyorum'],cOpts:['9. Sınıf','10. Sınıf','11. Sınıf','12. Sınıf'],rOpts:['Renk uyumu','Sadelik ve temizlik','Anlam ve sembol','Modern görünüm','Forma üzerindeki duruşu']},
+  en:{gOpts:['Girl','Boy','Prefer not to say'],cOpts:['9th Grade','10th Grade','11th Grade','12th Grade'],rOpts:['Color harmony','Simplicity','Meaning & symbol','Modern look','Uniform appearance']}
 };
-function tr(){return T[cfg.lang]||T.tr;}
-
+function setLang(l){
+  cfg.lang=l;
+  document.getElementById('lb-tr').style.borderColor=l==='tr'?'#7F77DD':'#ccc';
+  document.getElementById('lb-tr').style.color=l==='tr'?'#534AB7':'';
+  document.getElementById('lb-en').style.borderColor=l==='en'?'#7F77DD':'#ccc';
+  document.getElementById('lb-en').style.color=l==='en'?'#534AB7':'';
+}
 function applyLang(){
-  var t=tr();
-  document.getElementById('poll-title').textContent=t.title;
-  document.getElementById('poll-sub').textContent=t.sub;
-  document.getElementById('q-gender').textContent=t.qGender;
-  document.getElementById('q-class').textContent=t.qClass;
-  document.getElementById('q-pick').textContent=t.qPick;
-  document.getElementById('q-compare').textContent=t.qCompare;
-  document.getElementById('q-reason').textContent=t.qReason;
-  document.getElementById('q-star').textContent=t.qStar;
-  document.getElementById('closed-h').textContent=t.closed;
-  document.getElementById('closed-p').textContent=t.closedSub;
-  function buildOpts(cid,arr,key){
-    var c=document.getElementById(cid);c.innerHTML='';
-    arr.forEach(function(opt){var b=document.createElement('button');b.className='opt-btn';b.textContent=opt;b.onclick=function(){pick(b,key,opt)};c.appendChild(b);});
+  var t=T[cfg.lang]||T.tr;
+  function bOpts(id,arr,key){
+    var c=document.getElementById(id);c.innerHTML='';
+    arr.forEach(function(o){
+      var b=document.createElement('button');b.className='opt-btn';b.textContent=o;
+      b.onclick=function(){pick(b,key,o);};c.appendChild(b);
+    });
   }
-  buildOpts('opts-gender',t.gOpts,'cinsiyet');
-  buildOpts('opts-class',t.cOpts,'sinif');
-  buildOpts('opts-reason',t.rOpts,'neden');
-  document.querySelectorAll('.back-btn').forEach(function(b){b.textContent=t.back});
-  document.querySelectorAll('button.next:not(#n6)').forEach(function(b){b.textContent=t.next});
-  var ci=document.getElementById('poll-closed-msg'),pi=document.getElementById('poll-inner');
+  bOpts('opts-gender',t.gOpts,'cinsiyet');
+  bOpts('opts-class',t.cOpts,'sinif');
+  bOpts('opts-reason',t.rOpts,'neden');
+  updatePollStatus();
+}
+function updatePollStatus(){
+  var lbl=document.getElementById('poll-status-lbl');
+  var chk=document.getElementById('poll-open-chk');
+  if(lbl)lbl.textContent=cfg.pollOpen?'Anket açık — öğrenciler oy kullanabilir':'Anket kapalı — yeni oy alınmıyor';
+  if(chk)chk.checked=cfg.pollOpen;
+  var ci=document.getElementById('poll-closed-box'),pi=document.getElementById('poll-inner');
   if(!cfg.pollOpen){ci.style.display='block';pi.style.display='none';}
   else{ci.style.display='none';pi.style.display='block';}
 }
 
-window.buildAdminGrid=function(){
+/* ---- ADMIN GRID ---- */
+function buildAdminGrid(){
   document.getElementById('cnt-val').textContent=cfg.logoCount;
   var g=document.getElementById('admin-grid');g.innerHTML='';
   logos.forEach(function(logo,i){
-    var card=document.createElement('div');
-    card.className='admin-card'+(logo.img?' has-img':'');
-    card.innerHTML='<div class="img-box" id="aib'+i+'" onclick="window.trigUpload('+i+',\'logo\')">'+(logo.img?'<img src="'+logo.img+'">':'<span>Logo<br>yükle</span>')+'<div class="ov">Değiştir</div></div><div class="img-type">Logo</div><div class="img-box" id="afb'+i+'" onclick="window.trigUpload('+i+',\'forma\')">'+(logo.formaImg?'<img src="'+logo.formaImg+'">':'<span>Forma<br>yükle</span>')+'<div class="ov">Değiştir</div></div><div class="img-type">Forma</div><input class="logo-name-input" value="'+logo.name+'" onchange="logos['+i+'].name=this.value">'+(logo.img||logo.formaImg?'<button class="del-btn" onclick="window.clearLogo('+i+')">Temizle</button>':'');
-    g.appendChild(card);
+    var c=document.createElement('div');
+    c.className='admin-card'+(logo.img?' has-img':'');
+    c.innerHTML=
+      '<div class="img-box" onclick="trigUp('+i+',\'logo\')">'
+        +(logo.img?'<img src="'+logo.img+'">':'<span>Logo yükle</span>')
+        +'<div class="ov" style="position:absolute;inset:0;background:rgba(83,74,183,.15);display:none;align-items:center;justify-content:center;font-size:11px;color:#534AB7;font-weight:500">Değiştir</div>'
+      +'</div>'
+      +'<div class="img-type">Logo</div>'
+      +'<div class="img-box" onclick="trigUp('+i+',\'forma\')">'
+        +(logo.formaImg?'<img src="'+logo.formaImg+'">':'<span>Forma yükle</span>')
+        +'<div class="ov" style="position:absolute;inset:0;background:rgba(83,74,183,.15);display:none;align-items:center;justify-content:center;font-size:11px;color:#534AB7;font-weight:500">Değiştir</div>'
+      +'</div>'
+      +'<div class="img-type">Forma</div>'
+      +'<input class="logo-name-input" value="'+logo.name+'" onchange="logos['+i+'].name=this.value">'
+      +(logo.img||logo.formaImg?'<button class="del-btn" onclick="clrLogo('+i+')">Temizle</button>':'');
+    g.appendChild(c);
   });
-  document.getElementById('poll-status-lbl').textContent=cfg.pollOpen?'Anket açık — öğrenciler oy kullanabilir':'Anket kapalı';
-  document.getElementById('poll-open').checked=cfg.pollOpen;
-  document.getElementById('pass-input').value=cfg.pass;
-};
-
-window.trigUpload=function(idx,type){
+  document.getElementById('admin-pass-set').value=cfg.adminPass;
+  document.getElementById('res-pass-set').value=cfg.pass;
+  updatePollStatus();
+}
+function trigUp(i,t){
   var inp=document.createElement('input');inp.type='file';inp.accept='image/*';
   inp.onchange=function(e){
     var f=e.target.files[0];if(!f)return;
     var r=new FileReader();
-    r.onload=function(ev){if(type==='logo')logos[idx].img=ev.target.result;else logos[idx].formaImg=ev.target.result;buildAdminGrid();};
-    r.readAsDataURL(f);
+    r.onload=function(ev){
+      if(t==='logo')logos[i].img=ev.target.result;
+      else logos[i].formaImg=ev.target.result;
+      buildAdminGrid();
+    };r.readAsDataURL(f);
   };inp.click();
-};
-window.clearLogo=function(i){logos[i].img=null;logos[i].formaImg=null;buildAdminGrid();};
-window.clearAllLogos=function(){logos.forEach(function(l){l.img=null;l.formaImg=null;});buildAdminGrid();};
-window.saveAdmin=async function(){
-  var b=document.getElementById('save-btn');b.textContent='Kaydediliyor...';b.disabled=true;
-  await saveLogos();await saveCfg();
-  b.textContent='Kaydedildi!';setTimeout(function(){b.textContent='Firebase\'e Kaydet';b.disabled=false;},1500);
-};
-window.savePass=function(){cfg.pass=document.getElementById('pass-input').value;saveCfg();alert('Şifre kaydedildi.');};
-window.changeCount=function(d){
+}
+function clrLogo(i){logos[i].img=null;logos[i].formaImg=null;buildAdminGrid();}
+function clearAll(){logos.forEach(function(l){l.img=null;l.formaImg=null;});buildAdminGrid();}
+function chgCount(d){
   var n=Math.min(20,Math.max(2,cfg.logoCount+d));cfg.logoCount=n;
   while(logos.length<n)logos.push({name:'Logo '+(logos.length+1),img:null,formaImg:null});
   logos=logos.slice(0,n);buildAdminGrid();
-};
-window.exportCSV=function(){
+}
+function saveAdminPass(){cfg.adminPass=document.getElementById('admin-pass-set').value||'admin123';saveCfgFb();alert('Yönetici şifresi kaydedildi.');}
+function saveResPass(){cfg.pass=document.getElementById('res-pass-set').value;saveCfgFb();alert('Sonuç şifresi kaydedildi.');}
+async function saveAdmin(){
+  var b=document.getElementById('save-btn');b.textContent='Kaydediliyor...';b.disabled=true;
+  await saveLogosFb();await saveCfgFb();
+  b.textContent='Kaydedildi!';setTimeout(function(){b.textContent='Kaydet';b.disabled=false;},1500);
+}
+function exportCSV(){
   if(!votes.length){alert('Henüz oy yok.');return;}
-  var header=['Cinsiyet','Sinif','Logo','Neden','Yildiz','Yorum'];
-  var rows=votes.map(function(v){return[v.cinsiyet,v.sinif,v.logo,v.neden,v.yildiz,'"'+(v.yorum||'').replace(/"/g,'""')+'"'].join(',');});
-  var csv=[header.join(',')].concat(rows).join('\n');
-  var a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);a.download='logo_anketi.csv';a.click();
-};
-window.clearVotes=clearVotes;
+  var h='Cinsiyet,Sinif,Logo,Neden,Yildiz,Yorum,Zaman\n';
+  var rows=votes.map(function(v){return[v.cinsiyet,v.sinif,v.logo,v.neden,v.yildiz,'"'+(v.yorum||'').replace(/"/g,'""')+'"',v.zaman||''].join(',');}).join('\n');
+  var a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(h+rows);a.download='logo_anketi.csv';a.click();
+}
+async function clearVotes(){
+  try{
+    var r=await fbList('votes');
+    if(r.documents){
+      for(var d of r.documents){
+        var name=d.name.split('/').pop();
+        await fbDel('votes/'+name);
+      }
+    }
+    votes=[];renderResults();alert('Oylar silindi.');
+  }catch(e){alert('Hata: '+e.message);}
+}
 
+/* ---- POLL ---- */
 function buildPollGrid(){
   var g=document.getElementById('poll-logo-grid');g.innerHTML='';
   logos.forEach(function(logo){
-    var card=document.createElement('div');card.className='logo-card';
-    card.innerHTML='<div class="lc-img">'+(logo.img?'<img src="'+logo.img+'">':logo.name)+'</div><div class="lc-name">'+logo.name+'</div>';
-    card.onclick=function(){document.querySelectorAll('.logo-card').forEach(function(c){c.classList.remove('selected')});card.classList.add('selected');pdata.logo=logo.name;document.getElementById('n3').disabled=false;};
-    g.appendChild(card);
+    var c=document.createElement('div');c.className='logo-card';
+    c.innerHTML='<div class="lc-img">'+(logo.img?'<img src="'+logo.img+'">':logo.name)+'</div><div class="lc-name">'+logo.name+'</div>';
+    c.onclick=function(){
+      document.querySelectorAll('.logo-card').forEach(function(x){x.classList.remove('selected');});
+      c.classList.add('selected');pdata.logo=logo.name;
+      document.getElementById('n4').disabled=false;
+    };
+    g.appendChild(c);
   });
-  buildComparisons();
+  buildCmp();
 }
-function buildComparisons(){
+function buildCmp(){
   cmpPairs=[];cmpIdx=0;pdata.cmpWins={};
-  var n=Math.min(logos.length,5);
-  for(var i=0;i<n-1;i++)for(var j=i+1;j<n;j++)cmpPairs.push([i,j]);
-  cmpPairs.sort(function(){return Math.random()-.5});
-  cmpPairs=cmpPairs.slice(0,Math.min(5,cmpPairs.length));
+  for(var i=0;i<logos.length-1;i++)
+    for(var j=i+1;j<logos.length;j++)
+      cmpPairs.push([i,j]);
+  cmpPairs.sort(function(){return Math.random()-.5;});
   renderCmpPair();
 }
 function renderCmpPair(){
-  if(!cmpPairs.length){document.getElementById('n4').disabled=false;return;}
-  var t=tr();
-  document.getElementById('cmp-prog').textContent=t.cmpProg.replace('{a}',cmpIdx+1).replace('{b}',cmpPairs.length);
-  var pair=cmpPairs[cmpIdx],a=logos[pair[0]],b=logos[pair[1]];
+  var tot=cmpPairs.length;
+  if(!tot||cmpIdx>=tot){
+    document.getElementById('n3').disabled=false;
+    document.getElementById('cmp-prog').textContent='Tüm karşılaştırmalar tamamlandı!';
+    document.getElementById('cmp-area').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:1rem;font-size:13px;color:var(--color-text-secondary)">Devam edebilirsin.</div>';
+    return;
+  }
+  document.getElementById('cmp-prog').textContent=(cmpIdx+1)+' / '+tot+' karşılaştırma';
+  var p=cmpPairs[cmpIdx],a=logos[p[0]],b=logos[p[1]];
   document.getElementById('cmp-area').innerHTML=
-    '<div class="cmp-card" id="cmpa" onclick="window.pickCmp(0)"><div class="cmp-img">'+(a.img?'<img src="'+a.img+'">':a.name)+'</div><div style="font-size:13px;font-weight:500">'+a.name+'</div></div>'
-    +'<div class="vs-badge">VS</div>'
-    +'<div class="cmp-card" id="cmpb" onclick="window.pickCmp(1)"><div class="cmp-img">'+(b.img?'<img src="'+b.img+'">':b.name)+'</div><div style="font-size:13px;font-weight:500">'+b.name+'</div></div>';
+    '<div class="cmp-card" id="ca" onclick="pickCmp(0)">'
+      +'<div class="cmp-img">'+(a.img?'<img src="'+a.img+'">':a.name)+'</div>'
+      +'<div style="font-size:12px;font-weight:500">'+a.name+'</div>'
+    +'</div>'
+    +'<div class="vs">VS</div>'
+    +'<div class="cmp-card" id="cb" onclick="pickCmp(1)">'
+      +'<div class="cmp-img">'+(b.img?'<img src="'+b.img+'">':b.name)+'</div>'
+      +'<div style="font-size:12px;font-weight:500">'+b.name+'</div>'
+    +'</div>';
 }
-window.pickCmp=function(side){
-  var pair=cmpPairs[cmpIdx],winner=logos[pair[side]].name;
-  pdata.cmpWins[winner]=(pdata.cmpWins[winner]||0)+1;
-  var cards=document.querySelectorAll('.cmp-card');
-  cards[side].classList.add('selected');cards[1-side].style.opacity='0.4';
-  setTimeout(function(){cmpIdx++;if(cmpIdx>=cmpPairs.length){document.getElementById('n4').disabled=false;document.getElementById('cmp-prog').textContent='Tamamlandı!';}else renderCmpPair();},400);
-};
+function pickCmp(s){
+  var p=cmpPairs[cmpIdx],w=logos[p[s]].name;
+  pdata.cmpWins[w]=(pdata.cmpWins[w]||0)+1;
+  var ca=document.getElementById('ca'),cb=document.getElementById('cb');
+  (s===0?ca:cb).classList.add('win');(s===0?cb:ca).classList.add('lose');
+  setTimeout(function(){cmpIdx++;renderCmpPair();},350);
+}
+function skipCmp(){cmpIdx++;renderCmpPair();}
 
-window.pick=function(btn,key,val){
-  btn.parentElement.querySelectorAll('.opt-btn').forEach(function(b){b.classList.remove('selected')});
+function pick(btn,key,val){
+  btn.parentElement.querySelectorAll('.opt-btn').forEach(function(b){b.classList.remove('selected');});
   btn.classList.add('selected');pdata[key]=val;
   var sid=btn.closest('.step').id.replace('s','');
   var nb=document.getElementById('n'+sid);if(nb)nb.disabled=false;
-};
-window.rateStar=function(n){
+}
+function rateStar(n){
   pdata.yildiz=n;
-  document.querySelectorAll('.star').forEach(function(s,i){s.classList.toggle('lit',i<n)});
+  document.querySelectorAll('.star').forEach(function(s,i){s.classList.toggle('lit',i<n);});
   document.getElementById('n6').disabled=false;
-};
-window.go=function(n){
-  document.querySelectorAll('#view-poll .step').forEach(function(s){s.classList.remove('active')});
+}
+function go(n){
+  document.querySelectorAll('#view-poll .step').forEach(function(s){s.classList.remove('active');});
   document.getElementById('s'+n).classList.add('active');
-  document.getElementById('prog').style.width=Math.round((n/TOTAL_STEPS)*100)+'%';
-  document.getElementById('step-lbl').textContent=tr().stepOf.replace('{a}',n).replace('{b}',TOTAL_STEPS);
-};
-window.submitPoll=async function(){
+  document.getElementById('prog').style.width=Math.round(n/STEPS*100)+'%';
+  document.getElementById('step-lbl').textContent='Adım '+n+' / '+STEPS;
+}
+async function submitPoll(){
   var entry={cinsiyet:pdata.cinsiyet,sinif:pdata.sinif,logo:pdata.logo,neden:pdata.neden,yildiz:pdata.yildiz,cmpWins:JSON.stringify(pdata.cmpWins),yorum:document.getElementById('yorum').value,zaman:new Date().toISOString()};
-  document.getElementById('n6').textContent='Gönderiliyor...';
-  document.getElementById('n6').disabled=true;
-  var ok=await addVote(entry);
-  if(ok)window.go(7);
-  else{document.getElementById('n6').textContent='Gönder';document.getElementById('n6').disabled=false;alert('Hata oluştu, tekrar deneyin.');}
-};
-window.resetPoll=function(){
+  var btn=document.getElementById('n6');btn.textContent='Gönderiliyor...';btn.disabled=true;
+  try{await addVoteFb(entry);go(7);}
+  catch(e){btn.textContent='Gönder';btn.disabled=false;alert('Hata, tekrar deneyin.');}
+}
+function resetPoll(){
   pdata={cinsiyet:null,sinif:null,logo:null,neden:null,yildiz:0,cmpWins:{}};
-  document.querySelectorAll('.opt-btn').forEach(function(b){b.classList.remove('selected')});
-  document.querySelectorAll('.logo-card').forEach(function(c){c.classList.remove('selected')});
-  document.querySelectorAll('.star').forEach(function(s){s.classList.remove('lit')});
+  document.querySelectorAll('.opt-btn').forEach(function(b){b.classList.remove('selected');});
+  document.querySelectorAll('.logo-card').forEach(function(c){c.classList.remove('selected');});
+  document.querySelectorAll('.star').forEach(function(s){s.classList.remove('lit');});
   document.getElementById('yorum').value='';
-  ['n1','n2','n3','n4','n5','n6'].forEach(function(id){var el=document.getElementById(id);if(el){el.disabled=true;el.textContent=id==='n6'?'Gönder':tr().next;}});
-  buildComparisons();window.go(1);
-};
+  for(var i=1;i<=6;i++){var el=document.getElementById('n'+i);if(el){el.disabled=true;el.textContent=i===6?'Gönder':'Devam';}}
+  buildCmp();go(1);
+}
 
+/* ---- RESULTS ---- */
 function openResults(){
-  if(cfg.pass&&!resultsUnlocked){document.getElementById('lock-screen').style.display='block';document.getElementById('results-inner').innerHTML='';}
-  else{document.getElementById('lock-screen').style.display='none';renderResults();}
+  if(cfg.pass&&!resOK){
+    document.getElementById('res-lock-wrap').style.display='flex';
+    document.getElementById('results-inner').innerHTML='';
+  }else{
+    document.getElementById('res-lock-wrap').style.display='none';
+    renderResults();
+  }
 }
-window.checkPass=function(){
-  if(document.getElementById('lock-pass').value===cfg.pass){resultsUnlocked=true;document.getElementById('lock-screen').style.display='none';renderResults();}
-  else document.getElementById('lock-err').style.display='block';
-};
+function chkRes(){
+  if(document.getElementById('res-lock-inp').value===cfg.pass){
+    resOK=true;document.getElementById('res-lock-wrap').style.display='none';renderResults();
+  }else document.getElementById('res-err').style.display='block';
+}
 
-var palette=['#7F77DD','#5DCAA5','#D85A30','#378ADD','#BA7517','#D4537E','#639922','#E24B4A','#888780','#534AB7','#1D9E75','#D4537E'];
-function makeChart(id,type,labels,data){
-  var ctx=document.getElementById(id);if(!ctx)return;
-  if(charts[id])try{charts[id].destroy()}catch(e){}
-  charts[id]=new Chart(ctx,{type:type,data:{labels:labels,datasets:[{data:data,backgroundColor:palette.slice(0,labels.length),borderWidth:0}]},options:{responsive:true,plugins:{legend:{display:type==='doughnut',position:'right',labels:{font:{size:11},boxWidth:12}}},scales:type==='bar'?{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:11}}},x:{ticks:{font:{size:10}}}}:{}}});
-}
+var palette=['#7F77DD','#5DCAA5','#D85A30','#378ADD','#BA7517','#D4537E','#639922','#E24B4A','#888780','#534AB7','#1D9E75','#F09595'];
 
 function renderResults(){
   var el=document.getElementById('results-inner');
-  var t=tr();var n=votes.length;
-  if(n===0){el.innerHTML='<div style="text-align:center;padding:2rem;color:var(--color-text-secondary);font-size:14px">'+t.noVotes+'</div>';return;}
-  function countBy(key){var m={};votes.forEach(function(v){if(v[key])m[v[key]]=(m[v[key]]||0)+1});return m;}
-  var lm=countBy('logo'),top=Object.entries(lm).sort(function(a,b){return b[1]-a[1]})[0]||['—',0];
-  var topL=logos.find(function(l){return l.name===top[0]})||{};
-  var avgS=n>0?(votes.reduce(function(a,v){return a+(v.yildiz||0)},0)/n).toFixed(1):'—';
+  var n=votes.length;
+  if(n===0){el.innerHTML='<div style="text-align:center;padding:2rem;color:var(--color-text-secondary)">Henüz oy yok.</div>';return;}
+  function cntBy(key){var m={};votes.forEach(function(v){if(v[key])m[v[key]]=(m[v[key]]||0)+1;});return m;}
+  var lm=cntBy('logo');
+  var top=Object.entries(lm).sort(function(a,b){return b[1]-a[1];})[0]||['—',0];
+  var topL=logos.find(function(l){return l.name===top[0];})||{};
+  var avgS=(votes.reduce(function(a,v){return a+(Number(v.yildiz)||0);},0)/n).toFixed(1);
   var cmpT={};
-  votes.forEach(function(v){if(v.cmpWins){try{var w=JSON.parse(v.cmpWins);Object.entries(w).forEach(function(e){cmpT[e[0]]=(cmpT[e[0]]||0)+e[1]});}catch(er){}}});
-  var cmpLeader=Object.entries(cmpT).sort(function(a,b){return b[1]-a[1]})[0];
+  votes.forEach(function(v){if(v.cmpWins){try{var w=JSON.parse(v.cmpWins);Object.entries(w).forEach(function(e){cmpT[e[0]]=(cmpT[e[0]]||0)+Number(e[1]);});}catch(er){}}});
+  var cmpTop=Object.entries(cmpT).sort(function(a,b){return b[1]-a[1];})[0];
 
   el.innerHTML=
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">'
       +'<span style="font-size:13px;font-weight:500">Sonuçlar</span>'
-      +'<span style="font-size:11px;background:#EAF3DE;color:#3B6D11;padding:3px 9px;border-radius:8px">Canli • '+n+' katilimci</span>'
+      +'<span style="font-size:11px;background:#EAF3DE;color:#3B6D11;padding:3px 9px;border-radius:8px">Canlı · '+n+' katılımcı</span>'
     +'</div>'
-    +'<div class="winner-box"><div class="winner-img">'+(topL.img?'<img src="'+topL.img+'">':'')+'</div><div><div class="w-label">'+t.winner+'</div><div class="w-logo">'+top[0]+'</div><div style="font-size:12px;color:#7F77DD;margin-top:2px">'+top[1]+' '+t.votes2+'</div></div></div>'
-    +'<div class="metric-grid"><div class="metric"><div class="m-label">'+t.total+'</div><div class="m-val">'+n+'</div></div><div class="metric"><div class="m-label">'+t.avg+'</div><div class="m-val">'+avgS+'</div></div><div class="metric"><div class="m-label">'+t.cmpScore+'</div><div class="m-val" style="font-size:13px">'+(cmpLeader?cmpLeader[0]:'—')+'</div></div></div>'
-    +'<div class="result-card"><div class="result-title">'+t.logoDist+'</div><canvas id="ch-logo"></canvas></div>'
-    +'<div class="result-card"><div class="result-title">'+t.genderDist+'</div><canvas id="ch-gender"></canvas></div>'
-    +'<div class="result-card"><div class="result-title">'+t.classDist+'</div><canvas id="ch-class"></canvas></div>'
-    +'<div class="result-card"><div class="result-title">'+t.reasonDist+'</div><canvas id="ch-reason"></canvas></div>'
-    +(Object.keys(cmpT).length?'<div class="result-card"><div class="result-title">'+t.cmpDist+'</div><canvas id="ch-cmp"></canvas></div>':'')
-    +'<div class="result-card"><div class="result-title">'+t.comments+'</div><div id="clist"></div></div>'
-    +'<div class="btn-row" style="margin-top:.5rem"><button class="btn-o" onclick="window.exportCSV()">CSV İndir</button></div>';
+    +'<div class="winner-box">'
+      +'<div class="winner-img">'+(topL.img?'<img src="'+topL.img+'">':'')+'</div>'
+      +'<div><div style="font-size:11px;color:#534AB7">En çok oy alan logo</div>'
+      +'<div style="font-size:16px;font-weight:500;color:#3C3489">'+top[0]+'</div>'
+      +'<div style="font-size:12px;color:#7F77DD;margin-top:2px">'+top[1]+' oy</div></div>'
+    +'</div>'
+    +'<div class="metric-grid">'
+      +'<div class="metric"><div class="ml">Toplam</div><div class="mv">'+n+'</div></div>'
+      +'<div class="metric"><div class="ml">Ort. Puan</div><div class="mv">'+avgS+'</div></div>'
+      +'<div class="metric"><div class="ml">Karş. Lideri</div><div class="mv" style="font-size:12px">'+(cmpTop?cmpTop[0]:'—')+'</div></div>'
+    +'</div>'
+    /* logo detail */
+    +'<div class="result-card"><div class="result-title">Logo Bazında Detay</div>'
+      +'<div class="logo-detail-grid" id="ldg"></div>'
+      +'<div id="ldp"></div>'
+    +'</div>'
+    +'<div class="result-card"><div class="result-title">Logo Oy Dağılımı</div><canvas id="ch-logo"></canvas></div>'
+    +'<div class="result-card"><div class="result-title">Cinsiyete Göre</div><canvas id="ch-gender"></canvas></div>'
+    +'<div class="result-card"><div class="result-title">Sınıfa Göre</div><canvas id="ch-class"></canvas></div>'
+    +'<div class="result-card"><div class="result-title">Tercih Nedenleri</div><canvas id="ch-reason"></canvas></div>'
+    +(Object.keys(cmpT).length?'<div class="result-card"><div class="result-title">Karşılaştırma Sonuçları</div><canvas id="ch-cmp"></canvas></div>':'')
+    +'<div class="result-card"><div class="result-title">Yorumlar</div><div id="clist"></div></div>'
+    +'<div class="btn-row"><button class="btn-o" onclick="exportCSV()">CSV İndir</button></div>';
 
-  var le=Object.entries(lm).sort(function(a,b){return b[1]-a[1]});
-  makeChart('ch-logo','bar',le.map(function(e){return e[0]}),le.map(function(e){return e[1]}));
-  var ge=Object.entries(countBy('cinsiyet'));
-  makeChart('ch-gender','doughnut',ge.map(function(e){return e[0]}),ge.map(function(e){return e[1]}));
-  var ce=Object.entries(countBy('sinif'));
-  makeChart('ch-class','bar',ce.map(function(e){return e[0]}),ce.map(function(e){return e[1]}));
-  var ne=Object.entries(countBy('neden')).sort(function(a,b){return b[1]-a[1]});
-  makeChart('ch-reason','bar',ne.map(function(e){return e[0]}),ne.map(function(e){return e[1]}));
-  if(Object.keys(cmpT).length){var cme=Object.entries(cmpT).sort(function(a,b){return b[1]-a[1]});makeChart('ch-cmp','bar',cme.map(function(e){return e[0]}),cme.map(function(e){return e[1]}));}
+  /* logo detail cards */
+  var ldg=document.getElementById('ldg');
+  logos.forEach(function(logo){
+    var vc=lm[logo.name]||0;
+    var c=document.createElement('div');c.className='lsc';
+    c.innerHTML='<div class="lsc-img">'+(logo.img?'<img src="'+logo.img+'">':logo.name)+'</div>'
+      +'<div class="lsc-name">'+logo.name+'</div>'
+      +'<div class="lsc-v">'+vc+' oy</div>';
+    c.onclick=function(){
+      document.querySelectorAll('.lsc').forEach(function(x){x.classList.remove('active');});
+      if(selLogo===logo.name){selLogo=null;document.getElementById('ldp').innerHTML='';return;}
+      selLogo=logo.name;c.classList.add('active');renderLogoDetail(logo.name,cmpT);
+    };
+    ldg.appendChild(c);
+  });
+
+  /* charts */
+  function mkChart(id,type,labels,data){
+    var ctx=document.getElementById(id);if(!ctx)return;
+    if(charts[id])try{charts[id].destroy();}catch(e){}
+    charts[id]=new Chart(ctx,{
+      type:type,
+      data:{labels:labels,datasets:[{data:data,backgroundColor:palette.slice(0,labels.length),borderWidth:0}]},
+      options:{responsive:true,plugins:{legend:{display:type==='doughnut',position:'right',labels:{font:{size:11},boxWidth:12}}},
+        scales:type==='bar'?{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}}},x:{ticks:{font:{size:10},maxRotation:30}}}:{}}
+    });
+  }
+
+  /* logo chart with small images using plugin */
+  function mkLogoChart(id,labels,data){
+    var ctx=document.getElementById(id);if(!ctx)return;
+    if(charts[id])try{charts[id].destroy();}catch(e){}
+    var imgs=labels.map(function(name){
+      var l=logos.find(function(x){return x.name===name;});
+      if(l&&l.img){var im=new Image();im.src=l.img;return im;}
+      return null;
+    });
+    var imgPlugin={id:'lp',afterDraw:function(ch){
+      var ax=ch.scales.x,bt=ch.chartArea.bottom,c2=ch.ctx;
+      ax.ticks.forEach(function(_,i){
+        var x=ax.getPixelForTick(i),im=imgs[i];
+        if(im&&im.complete&&im.naturalWidth)c2.drawImage(im,x-10,bt+4,20,20);
+      });
+    }};
+    charts[id]=new Chart(ctx,{
+      type:'bar',
+      data:{labels:labels,datasets:[{data:data,backgroundColor:palette.slice(0,labels.length),borderWidth:0}]},
+      options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:10}}},x:{ticks:{font:{size:10},maxRotation:30}}}},
+      plugins:[imgPlugin]
+    });
+  }
+
+  var le=Object.entries(lm).sort(function(a,b){return b[1]-a[1];});
+  mkLogoChart('ch-logo',le.map(function(e){return e[0];}),le.map(function(e){return e[1];}));
+  var ge=Object.entries(cntBy('cinsiyet'));mkChart('ch-gender','doughnut',ge.map(function(e){return e[0];}),ge.map(function(e){return e[1];}));
+  var ce=Object.entries(cntBy('sinif'));mkChart('ch-class','bar',ce.map(function(e){return e[0];}),ce.map(function(e){return e[1];}));
+  var ne=Object.entries(cntBy('neden')).sort(function(a,b){return b[1]-a[1];});mkChart('ch-reason','bar',ne.map(function(e){return e[0];}),ne.map(function(e){return e[1];}));
+  if(Object.keys(cmpT).length){
+    var cme=Object.entries(cmpT).sort(function(a,b){return b[1]-a[1];});
+    mkLogoChart('ch-cmp',cme.map(function(e){return e[0];}),cme.map(function(e){return e[1];}));
+  }
 
   var cl=document.getElementById('clist');
-  var commented=votes.filter(function(v){return v.yorum&&v.yorum.trim()});
+  var commented=votes.filter(function(v){return v.yorum&&v.yorum.trim();});
   if(!commented.length)cl.innerHTML='<div style="font-size:13px;color:var(--color-text-secondary)">Yorum yok.</div>';
-  else commented.forEach(function(v){cl.innerHTML+='<div class="comment-item"><div class="comment-meta">'+v.logo+' · '+v.sinif+' · '+v.cinsiyet+' · '+'★'.repeat(v.yildiz||0)+'</div>'+v.yorum+'</div>';});
+  else commented.forEach(function(v){
+    var l=logos.find(function(x){return x.name===v.logo;})||{};
+    cl.innerHTML+='<div class="comment-item"><div class="comment-meta">'
+      +(l.img?'<img src="'+l.img+'" style="width:14px;height:14px;object-fit:contain;border-radius:2px;vertical-align:middle;margin-right:3px">':'')
+      +v.logo+' · '+v.sinif+' · '+v.cinsiyet+' · '+'★'.repeat(Number(v.yildiz)||0)+'</div>'+v.yorum+'</div>';
+  });
 }
 
-window.openResults=openResults;
-window.renderResults=renderResults;
+function renderLogoDetail(name,cmpT){
+  var panel=document.getElementById('ldp');
+  var lv=votes.filter(function(v){return v.logo===name;});
+  var n=lv.length;
+  var logo=logos.find(function(l){return l.name===name;})||{};
+  if(n===0){panel.innerHTML='<div style="padding:1rem;text-align:center;font-size:13px;color:var(--color-text-secondary)">Bu logo için henüz oy yok.</div>';return;}
+  function cntBy(key){var m={};lv.forEach(function(v){if(v[key])m[v[key]]=(m[v[key]]||0)+1;});return m;}
+  function bars(map){
+    var tot=lv.length;
+    return Object.entries(map).sort(function(a,b){return b[1]-a[1];}).map(function(e){
+      var pct=Math.round(e[1]/tot*100);
+      return '<div class="bar-row"><div class="bar-lbl">'+e[0]+'</div><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%"></div></div><div class="bar-pct">'+pct+'%</div></div>';
+    }).join('');
+  }
+  var avgS=(lv.reduce(function(a,v){return a+(Number(v.yildiz)||0);},0)/n).toFixed(1);
+  var cmpW=cmpT&&cmpT[name]?cmpT[name]:0;
+  panel.innerHTML=
+    '<div class="detail-panel">'
+      +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">'
+        +(logo.img?'<img src="'+logo.img+'" style="width:42px;height:42px;object-fit:contain;border-radius:6px;border:0.5px solid #ddd">':'')
+        +(logo.formaImg?'<img src="'+logo.formaImg+'" style="width:42px;height:42px;object-fit:contain;border-radius:6px;border:0.5px solid #ddd">':'')
+        +'<div><div style="font-size:14px;font-weight:500">'+name+'</div>'
+        +'<div style="font-size:12px;color:var(--color-text-secondary)">'+n+' oy · Ort. '+avgS+' ★ · Karş. '+cmpW+' kazanç</div></div>'
+      +'</div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'
+        +'<div><div style="font-size:10px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px;text-transform:uppercase">Cinsiyet</div>'+bars(cntBy('cinsiyet'))+'</div>'
+        +'<div><div style="font-size:10px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px;text-transform:uppercase">Sınıf</div>'+bars(cntBy('sinif'))+'</div>'
+      +'</div>'
+      +'<div style="margin-top:10px"><div style="font-size:10px;font-weight:500;color:var(--color-text-secondary);margin-bottom:6px;text-transform:uppercase">Tercih Nedeni</div>'+bars(cntBy('neden'))+'</div>'
+    +'</div>';
+}
 
-(async function init(){
-  await loadFromFirebase();
-  listenVotes();
+/* ---- INIT ---- */
+(async function(){
+  await loadCfg();
+  await loadVotes();
   applyLang();
-  window.go(1);
+  buildPollGrid();
+  startLive();
 })();
 </script>
