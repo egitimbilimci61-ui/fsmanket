@@ -674,36 +674,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
 async function initApp() {
   try {
-    // Firebase başlat
+    // 1. Temel Başlatma
     app = firebase.initializeApp(firebaseConfig);
     db = firebase.firestore();
+    deviceFingerprint = generateFingerprint();
     
-    console.log('✅ Firebase başlatıldı');
+    console.log('✅ Firebase ve Fingerprint hazır');
     updateStatus(true, '✅ Firebase bağlı');
     
-    // Cihaz fingerprint oluştur
-    deviceFingerprint = generateFingerprint();
-    console.log('🔐 Fingerprint:', deviceFingerprint);
-    
-    // Veritabanı kontrol ve kurulum
+    // 2. Veri Yükleme (Sırayla ve Bekleyerek)
     await checkDatabaseSetup();
-    
-    // Verileri yükle (Buradaki await'ler verinin gelmesini bekler)
     await loadConfig();
     await loadLogos();
     await loadVotes();
     
-    // --- UI HAZIRLA ---
-    applyLanguage();     // Dil seçeneklerini uygular
-    buildAdminGrid();    // Yönetim panelindeki logoları çizer
-    buildPollGrid();     // ANKET SAYFASINDAKİ LOGOLARI ÇİZER (Eksik olan buydu)
+    // 3. UI HAZIRLA (Hata Korumalı Sıralama)
     
-    updatePollStatus();  // Anketin açık mı kapalı mı olduğunu kontrol eder
+    // ÖNCE BUTONLAR: Bu fonksiyonun çalışması anketin başlaması için kritiktir.
+    try {
+        applyLanguage(); 
+    } catch (e) { console.error("Dil yükleme hatası:", e); }
+
+    // SONRA LOGO IZGARALARI
+    try {
+        buildAdminGrid();
+        buildPollGrid();
+    } catch (e) { console.error("Grid oluşturma hatası:", e); }
     
-    console.log('✅ Uygulama ve logolar hazır');
+    // EN SON SONUÇLAR: En ağır işlem budur, hata payı yüksektir. 
+    // Diğerlerini bozmaması için ayrı bir blokta tutuyoruz.
+    try {
+        renderResults();
+    } catch (e) { 
+        console.error("Sonuçlar ekranı çizilemedi, ancak anket çalışıyor:", e); 
+    }
+    
+    updatePollStatus();
+    console.log('🚀 Uygulama tamamen hazır');
     
   } catch (error) {
-    console.error('❌ Başlatma hatası:', error);
+    console.error('❌ Kritik Başlatma Hatası:', error);
     updateStatus(false, '❌ Bağlantı hatası: ' + error.message);
     showError('Uygulama başlatılamadı: ' + error.message);
   }
