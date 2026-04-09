@@ -1687,7 +1687,7 @@ function renderResults() {
 
     // --- 2. HTML İNŞA ---
     
-    // BÖLÜM A: LİDER VE ÖZET KARTLARI (Görsel 1'deki gibi)
+    // BÖLÜM A: LİDER VE ÖZET KARTLARI
     let html = `
         <div style="background: linear-gradient(135deg, #534AB7 0%, #764ba2 100%); padding: 20px; border-radius: 15px; color: white; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
             <div style="width: 70px; height: 70px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
@@ -1699,40 +1699,47 @@ function renderResults() {
             </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
-            <div style="background: white; padding: 20px; border-radius: 15px; text-align: center; border: 1px solid #eee; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                <div style="font-size: 11px; color: #888; font-weight: 700; text-transform: uppercase;">Toplam Oy</div>
-                <div style="font-size: 24px; font-weight: 800; color: #534AB7; margin-top: 5px;">${count}</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 25px;">
+            <div style="background: #FFF0F5; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #ffd1dc;">
+                <div style="font-size: 10px; font-weight: 800; color: #d81b60; text-transform: uppercase;">👧 Kızlar Favorisi</div>
+                <div style="font-size: 16px; font-weight: 800; color: #333; margin-top: 4px;">${Object.entries(genderBreakdown['Kız'] || {}).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—'}</div>
             </div>
-            <div style="background: white; padding: 20px; border-radius: 15px; text-align: center; border: 1px solid #eee; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                <div style="font-size: 11px; color: #888; font-weight: 700; text-transform: uppercase;">Ortalama Puan</div>
-                <div style="font-size: 24px; font-weight: 800; color: #534AB7; margin-top: 5px;">${avgRating}★</div>
+            <div style="background: #E3F2FD; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #bbdefb;">
+                <div style="font-size: 10px; font-weight: 800; color: #1976d2; text-transform: uppercase;">👦 Erkekler Favorisi</div>
+                <div style="font-size: 16px; font-weight: 800; color: #333; margin-top: 4px;">${Object.entries(genderBreakdown['Erkek'] || {}).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—'}</div>
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <div style="font-size: 10px; color: #888; font-weight: 700; text-transform: uppercase;">Toplam Oy / Puan</div>
+                <div style="font-size: 16px; font-weight: 800; color: #534AB7; margin-top: 4px;">${count} Oy | ${avgRating}★</div>
             </div>
         </div>
     `;
 
-    // BÖLÜM B: GENEL OY DAĞILIMI (Görsel 2'deki Çubuk Grafikler)
+    // BÖLÜM B: GENEL OY DAĞILIMI (Resimli ve Çubuk Grafikli)
     html += `
         <div class="result-card" style="background: white; padding: 20px; border-radius: 15px; margin-bottom: 25px; border: 1px solid #eee;">
-            <div style="font-weight: 800; margin-bottom: 15px; color: #333; display: flex; align-items: center; gap: 8px;">📊 Genel Oy Dağılımı</div>
-            <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="font-weight: 800; margin-bottom: 18px; color: #333; display: flex; align-items: center; gap: 8px;">📊 Genel Oy Dağılımı</div>
+            <div style="display: flex; flex-direction: column; gap: 14px;">
                 ${state.logos.map(l => {
                     const votes = stats.logo[l.name] || 0;
                     const pct = count > 0 ? (votes / count) * 100 : 0;
                     return `
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <div style="width: 60px; font-size: 12px; font-weight: 600; color: #666;">${l.name}</div>
-                            <div style="flex: 1; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden;">
-                                <div style="width: ${pct}%; height: 100%; background: #534AB7; border-radius: 4px;"></div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 30px; height: 30px; border-radius: 50%; border: 1px solid #eee; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #fff; flex-shrink: 0;">
+                                ${l.img ? `<img src="${l.img}" style="width: 100%; height: 100%; object-fit: contain;">` : '🖼️'}
                             </div>
-                            <div style="width: 40px; text-align: right; font-size: 12px; font-weight: 700; color: #333;">${votes} Oy</div>
+                            <div style="width: 50px; font-size: 11px; font-weight: 700; color: #534AB7;">${l.name}</div>
+                            <div style="flex: 1; height: 8px; background: #f0f0f5; border-radius: 4px; overflow: hidden;">
+                                <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, #534AB7, #764ba2); border-radius: 4px;"></div>
+                            </div>
+                            <div style="width: 45px; text-align: right; font-size: 12px; font-weight: 700; color: #333;">${votes} Oy</div>
                         </div>`;
                 }).join('')}
             </div>
         </div>
     `;
 
-    // BÖLÜM C: LOGO BAZLI NEDEN ANALİZİ (Sadece Oy Alanlar)
+    // BÖLÜM C: LOGO BAZLI NEDEN ANALİZİ
     html += `
         <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #eee;">
             <div style="font-weight: 800; margin-bottom: 12px; color: #333; font-size: 14px;">🎯 Logo Tercih Nedenleri</div>
@@ -1753,7 +1760,7 @@ function renderResults() {
         </div>
     `;
 
-    // BÖLÜM D: TÜM DÜELLOLAR VE SINIF LİDERLERİ
+    // BÖLÜM D: VS SIRALAMASI VE SINIF LİDERLERİ
     html += `
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 25px;">
             <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
@@ -1781,7 +1788,7 @@ function renderResults() {
         </div>
     `;
 
-    // BÖLÜM E: YORUMLAR (En Yeni Üstte)
+    // BÖLÜM E: YORUMLAR
     const comments = state.votes.filter(v => v.yorum && v.yorum.trim() !== "");
     html += `
         <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
@@ -1791,7 +1798,7 @@ function renderResults() {
             </div>
             <div style="max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
                 ${comments.slice().reverse().map(v => `
-                    <div style="background: #fdfdfd; padding: 10px; border-radius: 8px; border-left: 4px solid #534AB7; border-top: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                    <div style="background: #fdfdfd; padding: 10px; border-radius: 8px; border: 1px solid #f0f0f0; border-left: 4px solid #534AB7;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 11px;">
                             <span style="font-weight: 800; color: #534AB7;">${v.logo} Favorisi</span>
                             <span style="color: #999;">${v.sinif || ''} | ${v.cinsiyet || ''}</span>
