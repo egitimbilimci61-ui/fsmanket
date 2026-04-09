@@ -1631,7 +1631,7 @@ function checkResultPassword() {
 
 function renderResults() {
     const container = document.getElementById('results-inner');
-    if (!container) return; // Koruma: HTML'de yer yoksa çalışma
+    if (!container) return; 
 
     const count = (state.votes && Array.isArray(state.votes)) ? state.votes.length : 0;
 
@@ -1640,7 +1640,7 @@ function renderResults() {
         return;
     }
 
-    // --- 1. VERİ ANALİZİ VE TOPLAMA ---
+    // --- 1. VERİ ANALİZİ ---
     const stats = { logo: {}, sinif: {}, neden: {}, logoNedenleri: {}, yildiz: 0 };
     const genderBreakdown = { 'Kız': {}, 'Erkek': {} };
     const classBreakdown = {};
@@ -1681,33 +1681,31 @@ function renderResults() {
                 if (!classBreakdown[v.sinif]) classBreakdown[v.sinif] = {};
                 classBreakdown[v.sinif][v.logo] = (classBreakdown[v.sinif][v.logo] || 0) + 1;
             }
-        } catch (e) { console.warn("Tekil oy işleme hatası atlandı:", e); }
+        } catch (e) {}
     });
 
-    // --- 2. HESAPLAMALAR ---
     const sortedLogos = Object.entries(stats.logo).sort((a, b) => b[1] - a[1]);
     const topLogoName = sortedLogos[0]?.[0] || '—';
-    const topLogoCount = stats.logo[topLogoName] || 0;
     const topLogoObj = state.logos.find(l => l.name === topLogoName) || {};
     const avgRating = (stats.yildiz / count).toFixed(1);
     const sortedCmp = Object.entries(cmpTotals).sort((a, b) => b[1] - a[1]);
 
-    // --- 3. HTML İNŞA ---
+    // --- 2. HTML İNŞA ---
     
-    // Bölüm A: Üst Özet (Daha Kompakt)
+    // Bölüm A: Üst Özet
     let html = `
-        <div class="winner-box" style="background: linear-gradient(135deg, #534AB7 0%, #764ba2 100%); padding: 20px; border-radius: 15px; color: white; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-            <div style="width: 70px; height: 70px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 3px solid rgba(255,255,255,0.3);">
-                ${topLogoObj.img ? `<img src="${topLogoObj.img}" style="max-width:90%; max-height:90%;">` : '🏆'}
+        <div class="winner-box" style="background: linear-gradient(135deg, #534AB7 0%, #764ba2 100%); padding: 20px; border-radius: 15px; color: white; margin-bottom: 20px; display: flex; align-items: center; gap: 20px;">
+            <div style="width: 70px; height: 70px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                ${topLogoObj.img ? `<img src="${topLogoObj.img}" style="max-width:90%;">` : '🏆'}
             </div>
             <div>
                 <div style="font-size: 22px; font-weight: 800; margin: 0;">${topLogoName}</div>
-                <div style="font-size: 13px; opacity: 0.9;">${topLogoCount} Oy (%${Math.round((topLogoCount/count)*100)}) | ${count} Toplam Katılım</div>
+                <div style="font-size: 13px; opacity: 0.9;">${stats.logo[topLogoName]} Oy (%${Math.round((stats.logo[topLogoName]/count)*100)}) | ${count} Toplam Katılım</div>
             </div>
         </div>
     `;
 
-    // Bölüm B: Logo Bazlı Nedenler (GRID Düzeni ve Sadece Veri Olanlar)
+    // Bölüm B: Logo Bazlı Nedenler
     html += `
         <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #eee;">
             <div style="font-weight: 800; margin-bottom: 12px; color: #333; font-size: 14px;">🎯 Logo Tercih Nedenleri</div>
@@ -1719,9 +1717,7 @@ function renderResults() {
                             <div style="font-weight: 700; color: #534AB7; font-size: 12px; margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 3px;">${logoName} (${voteCount} Oy)</div>
                             <div style="display: flex; flex-wrap: wrap; gap: 4px;">
                                 ${Object.entries(nedenler).map(([n, c]) => `
-                                    <span style="font-size: 10px; background: white; border: 1px solid #ddd; padding: 1px 6px; border-radius: 4px; color: #666;">
-                                        ${n}: <strong>${c}</strong>
-                                    </span>
+                                    <span style="font-size: 10px; background: white; border: 1px solid #ddd; padding: 1px 6px; border-radius: 4px; color: #666;">${n}: <strong>${c}</strong></span>
                                 `).join('')}
                             </div>
                         </div>`;
@@ -1730,7 +1726,7 @@ function renderResults() {
         </div>
     `;
 
-    // Bölüm C: İstatistikler (Tek Satırda Yan Yana)
+    // Bölüm C: Cinsiyet ve Puan Özetleri
     html += `
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 20px;">
             <div style="background: #FFF0F5; padding: 10px; border-radius: 10px; border: 1px solid #ffd1dc; text-align: center;">
@@ -1748,24 +1744,53 @@ function renderResults() {
         </div>
     `;
 
-    // Bölüm D: Yorumlar (EN YENİ ÜSTTE)
+    // --- YENİ EKLENEN: DÜELLO VE SINIF LİDERLERİ (Kaybolan Bölümler) ---
+    html += `
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px;">
+            <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
+                <div style="font-weight: 800; margin-bottom: 12px; color: #333; font-size: 14px;">⚔️ Düello (VS) Sıralaması</div>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    ${sortedCmp.slice(0, 5).map(([name, wins], idx) => `
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; padding: 5px; background: #fcfcfc; border-radius: 6px;">
+                            <span>${idx+1}. ${name}</span>
+                            <span style="font-weight: 700; color: #534AB7;">${wins} Galibiyet</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+
+            <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
+                <div style="font-weight: 800; margin-bottom: 12px; color: #333; font-size: 14px;">📏 Sınıf Bazlı Liderler</div>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    ${Object.keys(classBreakdown).sort((a,b)=>parseInt(a)-parseInt(b)).map(s => `
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; padding: 5px; border-bottom: 1px solid #f0f0f0;">
+                            <span style="font-weight: 700;">${s}</span>
+                            <span style="color: #534AB7;">${Object.entries(classBreakdown[s]).sort((a,b)=>b[1]-a[1])[0][0]}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Bölüm D: Yorumlar
     const comments = state.votes.filter(v => v.yorum && v.yorum.trim() !== "");
     html += `
         <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
             <div style="font-weight: 800; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 14px; color: #333;">💬 Öğrenci Görüşleri</span>
-                <span style="font-size: 11px; background: #f0f0f0; color: #888; padding: 2px 8px; border-radius: 10px;">${comments.length} Mesaj</span>
+                <span style="font-size: 14px;">💬 Öğrenci Görüşleri</span>
+                <span style="font-size: 11px; color: #888;">${comments.length} Mesaj</span>
             </div>
             <div style="max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
-                ${comments.length > 0 ? comments.slice().reverse().map(v => `
+                ${comments.slice().reverse().map(v => `
                     <div style="background: #fdfdfd; padding: 10px; border-radius: 8px; border: 1px solid #f0f0f0; border-left: 4px solid #534AB7;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 11px;">
                             <span style="font-weight: 800; color: #534AB7;">${v.logo}</span>
-                            <span style="color: #999; font-weight: 600;">${v.sinif || ''} | ${v.cinsiyet || ''}</span>
+                            <span style="color: #999;">${v.sinif || ''} | ${v.cinsiyet || ''}</span>
                         </div>
                         <div style="font-size: 13px; color: #444; font-style: italic; line-height: 1.4;">"${v.yorum}"</div>
                     </div>
-                `).join('') : '<p style="text-align:center; font-size:12px; color:#999;">Yorum yok.</p>'}
+                `).join('')}
             </div>
         </div>
     `;
