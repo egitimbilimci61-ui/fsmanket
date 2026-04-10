@@ -660,16 +660,17 @@ const state = {
 const i18n = {
   tr: {
     gender: ['👧 Kız', '👦 Erkek', '🤐 Belirtmek istemiyorum'],
-    class: ['9. Sınıf', '10. Sınıf', '11. Sınıf', '12. Sınıf'],
+    // Mezun ve Diğer seçeneklerini buraya ekliyoruz:
+    class: ['9. Sınıf', '10. Sınıf', '11. Sınıf', '12. Sınıf', '🎓 Mezun', '🌐 Diğer'],
     reason: ['🎨 Renk uyumu', '✨ Sadelik', '📖 Anlam', '🚀 Modern', '👕 Forma duruşu']
   },
   en: {
     gender: ['👧 Girl', '👦 Boy', '🤐 Prefer not to say'],
-    class: ['9th Grade', '10th Grade', '11th Grade', '12th Grade'],
+    // İngilizce seçenekler için:
+    class: ['9th Grade', '10th Grade', '11th Grade', '12th Grade', '🎓 Alumnus', '🌐 Other'],
     reason: ['🎨 Color', '✨ Simple', '📖 Meaning', '🚀 Modern', '👕 Uniform']
   }
 };
-
 // ==================== BAŞLATMA ====================
 
 document.addEventListener('DOMContentLoaded', function() {
