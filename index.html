@@ -680,56 +680,57 @@ document.addEventListener('DOMContentLoaded', function() {
   
 async function initApp() {
   try {
-    // 1. Temel Başlatma (Firebase ve Kimlik)
-    app = firebase.initializeApp(firebaseConfig);
-    db = firebase.firestore();
-    deviceFingerprint = generateFingerprint();
+    // 1. Temel Başlatma (Firebase ve Kimlik) [cite: 175, 176]
+    app = firebase.initializeApp(firebaseConfig); [cite: 175]
+    db = firebase.firestore(); [cite: 176]
+    deviceFingerprint = generateFingerprint(); [cite: 176, 183]
     
-    console.log('✅ Firebase ve Fingerprint hazır');
-    updateStatus(true, '✅ Firebase bağlı');
+    console.log('✅ Firebase ve Fingerprint hazır'); [cite: 176]
+    updateStatus(true, '✅ Firebase bağlı'); [cite: 176]
 
     // --- HIZLANDIRMA DOKUNUŞU ---
-    // Veritabanından verilerin gelmesini beklemeden (await öncesi) 
-    // statik dil dosyasıyla butonları çiziyoruz ki kullanıcı beklemesin.
+    // Veritabanından verilerin gelmesini beklemeden statik dil dosyasıyla 
+    // butonları çiziyoruz ki kullanıcı (Cinsiyet/Sınıf sorularını) beklemek zorunda kalmasın.
     try {
-        applyLanguage(); 
+        applyLanguage(); [cite: 179, 180]
         console.log('⚡ Arayüz dilleri ve butonlar ön-yüklendi.');
     } catch (e) { console.error("Ön yükleme hatası:", e); }
     // ----------------------------
     
-    // 2. Veri Yükleme (Ağ trafiği burada gerçekleşir)
-    await checkDatabaseSetup();
-    await loadConfig();
-    await loadLogos();
-    await loadVotes();
+    // 2. Veri Yükleme (Ağ trafiği burada gerçekleşir) [cite: 178]
+    await checkDatabaseSetup(); [cite: 178]
+    await loadConfig(); [cite: 178]
+    await loadLogos(); [cite: 178]
+    await loadVotes(); [cite: 178]
     
     // 3. UI GÜNCELLEME (Veri geldikten sonraki son dokunuşlar)
     
-    // Veriler geldiği için butonları ve metinleri (varsa yeni verilerle) tazeliyoruz
+    // Veriler (Mezun/Diğer vb.) geldiği için butonları ve metinleri yeni verilerle tazeliyoruz
     try {
-        applyLanguage(); 
+        applyLanguage(); [cite: 179]
     } catch (e) { console.error("Dil yenileme hatası:", e); }
 
-    // Logo gridlerini veri geldikten sonra çizmek zorundayız
+    // Logo gridlerini ve mükerrer oy kontrolünü veri geldikten sonra yapmak zorundayız
     try {
-        buildAdminGrid();
-        buildPollGrid();
-    } catch (e) { console.error("Grid oluşturma hatası:", e); }
+        buildAdminGrid(); [cite: 179]
+        buildPollGrid(); [cite: 180]
+        checkDuplicate(); // 🛡️ Mükerrer oy uyarısını kontrol et [cite: 224, 293]
+    } catch (e) { console.error("Grid veya kontrol hatası:", e); }
     
-    // En son ve en kapsamlı sonuçlar ekranı
+    // En son ve en kapsamlı sonuçlar ekranı [cite: 225]
     try {
-        renderResults();
+        renderResults(); [cite: 337]
     } catch (e) { 
         console.error("Sonuçlar ekranı çizilemedi:", e); 
     }
     
-    updatePollStatus();
+    updatePollStatus(); [cite: 180, 211]
     console.log('🚀 Uygulama verilerle birlikte tamamen hazır');
     
   } catch (error) {
-    console.error('❌ Kritik Başlatma Hatası:', error);
-    updateStatus(false, '❌ Bağlantı hatası: ' + error.message);
-    showError('Uygulama başlatılamadı: ' + error.message);
+    console.error('❌ Kritik Başlatma Hatası:', error); [cite: 182]
+    updateStatus(false, '❌ Bağlantı hatası: ' + error.message); [cite: 182]
+    showError('Uygulama başlatılamadı: ' + error.message); [cite: 183]
   }
 }
 // ==================== YARDIMCI FONKSİYONLAR ====================
