@@ -1367,20 +1367,30 @@ function setLang(lang) {
 
 function applyLanguage() {
   const t = i18n[state.config.lang] || i18n.tr;
-  
+
   function buildOptions(containerId, options, key) {
     const container = document.getElementById(containerId);
     if (!container) return;
     
-    container.innerHTML = '';
+    container.innerHTML = ''; // İçeriği temizle
+    
     options.forEach(opt => {
       const btn = document.createElement('button');
       btn.className = 'opt-btn';
+      btn.type = 'button'; // Form submitini engellemek için
       btn.textContent = opt;
-      btn.onclick = () => selectOption(btn, key, opt.replace(/[^a-zA-Z0-9\s]/g, '').trim());
+      
+      // selectOption çağrılırken orijinal metni (opt) gönderiyoruz
+      btn.onclick = () => selectOption(btn, key, opt);
       container.appendChild(btn);
     });
   }
+  
+  // Soruları oluştur
+  buildOptions('opts-gender', t.gender, 'cinsiyet');
+  buildOptions('opts-class', t.class, 'sinif');
+  buildOptions('opts-reason', t.reason, 'neden');
+}
   
   buildOptions('opts-gender', t.gender, 'cinsiyet');
   buildOptions('opts-class', t.class, 'sinif');
