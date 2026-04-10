@@ -1708,61 +1708,61 @@ function renderResults() {
     if (!container) return; 
 
     // --- 1. VERİ ANALİZİ ---
-    const stats = { logo: {}, sinif: {}, neden: {}, logoNedenleri: {}, yildiz: 0 };
-    const genderBreakdown = { 'Kız': {}, 'Erkek': {} };
-    const classBreakdown = {};
-    const externalStats = { 'Mezun': {}, 'Diğer': {} }; // Mezun ve Diğer havuzu [cite: 364, 365]
+    const stats = { logo: {}, sinif: {}, neden: {}, logoNedenleri: {}, yildiz: 0 }; 
+    const genderBreakdown = { 'Kız': {}, 'Erkek': {} }; 
+    const classBreakdown = {}; 
+    const externalStats = { 'Mezun': {}, 'Diğer': {} }; 
     const cmpTotals = {}; 
     
-    let activeStudentCount = 0; // Sadece 9-12. sınıfları saymak için [cite: 365]
+    let activeStudentCount = 0; 
 
     state.votes.forEach(v => {
         try {
-            let s = v.sinif || ""; [cite: 366]
+            let s = v.sinif || ""; 
             
-            // YAZIM HATASI DÜZELTME: "Dier" olarak gelen veriyi "Diğer" olarak düzeltir
+            // YAZIM HATASI DÜZELTME: "Dier" olarak gelen veriyi "Diğer" yapar
             if (s === "Dier") s = "Diğer";
 
-            // FİLTRELEME: Mezun veya Diğer ise ana istatistiklere dahil etme [cite: 366]
-            if (s.includes("Mezun") || s.includes("Diğer")) {
-                const key = s.includes("Mezun") ? "Mezun" : "Diğer"; [cite: 366]
-                if (v.logo) {
-                    if (!externalStats[key][v.logo]) externalStats[key][v.logo] = 0; [cite: 366]
-                    externalStats[key][v.logo]++; [cite: 366]
+            // FİLTRELEME: Mezun veya Diğer ise ana istatistiklere dahil etme
+            if (s.includes("Mezun") || s.includes("Diğer")) { 
+                const key = s.includes("Mezun") ? "Mezun" : "Diğer"; 
+                if (v.logo) { 
+                    if (!externalStats[key][v.logo]) externalStats[key][v.logo] = 0; 
+                    externalStats[key][v.logo]++; 
                 }
-                return; // Bu oy genel toplama (Lider, Puan, Düello vb.) girmeyecek [cite: 367]
+                return; // Genel toplama (Lider, Puan, Düello) girmesini engeller 
             }
 
-            // BURADAN AŞAĞISI SADECE AKTİF ÖĞRENCİLER İÇİNDİR [cite: 367, 368]
-            activeStudentCount++;
+            // SADECE AKTİF ÖĞRENCİLER İÇİNDİR
+            activeStudentCount++; 
             
-            if (v.logo) {
-                stats.logo[v.logo] = (stats.logo[v.logo] || 0) + 1; [cite: 368]
-                if (v.neden) {
-                    if (!stats.logoNedenleri[v.logo]) stats.logoNedenleri[v.logo] = {}; [cite: 368]
-                    stats.logoNedenleri[v.logo][v.neden] = (stats.logoNedenleri[v.logo][v.neden] || 0) + 1; [cite: 368, 369]
+            if (v.logo) { 
+                stats.logo[v.logo] = (stats.logo[v.logo] || 0) + 1; 
+                if (v.neden) { 
+                    if (!stats.logoNedenleri[v.logo]) stats.logoNedenleri[v.logo] = {}; 
+                    stats.logoNedenleri[v.logo][v.neden] = (stats.logoNedenleri[v.logo][v.neden] || 0) + 1; 
                 }
             }
-            if (s) stats.sinif[s] = (stats.sinif[s] || 0) + 1; [cite: 369]
-            stats.yildiz += (Number(v.yildiz) || 0); [cite: 370]
+            if (s) stats.sinif[s] = (stats.sinif[s] || 0) + 1; 
+            stats.yildiz += (Number(v.yildiz) || 0); 
 
-            if (v.cmpWins) {
-                let wins = (typeof v.cmpWins === 'string') ? JSON.parse(v.cmpWins) : v.cmpWins; [cite: 370, 371]
-                if (wins && typeof wins === 'object') {
-                    Object.entries(wins).forEach(([name, val]) => {
-                        cmpTotals[name] = (cmpTotals[name] || 0) + Number(val); [cite: 371]
+            if (v.cmpWins) { 
+                let wins = (typeof v.cmpWins === 'string') ? JSON.parse(v.cmpWins) : v.cmpWins; 
+                if (wins && typeof wins === 'object') { 
+                    Object.entries(wins).forEach(([name, val]) => { 
+                        cmpTotals[name] = (cmpTotals[name] || 0) + Number(val); 
                     });
                 }
             }
 
-            let g = (v.cinsiyet || "").toString().toLowerCase().includes('erkek') ? 'Erkek' : 'Kız'; [cite: 372, 373]
-            if (v.logo) {
-                if (!genderBreakdown[g]) genderBreakdown[g] = {}; [cite: 373]
-                genderBreakdown[g][v.logo] = (genderBreakdown[g][v.logo] || 0) + 1; [cite: 374]
+            let g = (v.cinsiyet || "").toString().toLowerCase().includes('erkek') ? 'Erkek' : 'Kız'; 
+            if (v.logo) { 
+                if (!genderBreakdown[g]) genderBreakdown[g] = {}; 
+                genderBreakdown[g][v.logo] = (genderBreakdown[g][v.logo] || 0) + 1; 
             }
-            if (s && v.logo) {
-                if (!classBreakdown[s]) classBreakdown[s] = {}; [cite: 374]
-                classBreakdown[s][v.logo] = (classBreakdown[s][v.logo] || 0) + 1; [cite: 375]
+            if (s && v.logo) { 
+                if (!classBreakdown[s]) classBreakdown[s] = {}; 
+                classBreakdown[s][v.logo] = (classBreakdown[s][v.logo] || 0) + 1; 
             }
         } catch (e) {}
     });
