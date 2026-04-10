@@ -1388,21 +1388,19 @@ function applyLanguage() {
 }
 
 function selectOption(btn, key, value) {
-  // 1. Görsel seçim mantığı (Orjinal: tüm butonlardan seçimi kaldır, buna ekle) 
+  // Görsel seçim işlemleri (Orijinal yapı) [cite: 291, 292]
   btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
   
-  // 2. VERİ DÜZELTME: Sadece emojileri temizle, metne dokunma 
-  // Bu regex "Diğer" kelimesindeki "ğ" harfini silmez, sadece başındaki simgeyi siler.
-  const cleanValue = value.replace(/[^\w\sğüşıöçĞÜŞİÖÇ.-]/gi, '').trim();
+  // VERİ DÜZELTME: Sadece emojileri temizle, Türkçe karakterleri (ğ) koru.
+  // Bu sayede "Diğer" veritabanına "Dier" olarak değil, doğru şekilde kaydedilir.
+  const cleanValue = value.replace(/[^\w\sğüşıöçĞÜŞİÖÇ.-]/gi, '').trim(); [cite: 289]
   
-  // 3. Değeri state'e aktar (Orjinal yapı) [cite: 172, 291]
-  state.pollData[key] = cleanValue;
+  state.pollData[key] = cleanValue; [cite: 292]
   
-  // 4. Adım ve buton kontrolü (Orjinal yapı) 
-  const step = btn.closest('.step').id.replace('s', '');
-  const nextBtn = document.getElementById('n' + step);
-  if (nextBtn) nextBtn.disabled = false;
+  const step = btn.closest('.step').id.replace('s', ''); [cite: 292]
+  const nextBtn = document.getElementById('n' + step); [cite: 293]
+  if (nextBtn) nextBtn.disabled = false; [cite: 293]
 }
 
 async function checkDuplicate() {
