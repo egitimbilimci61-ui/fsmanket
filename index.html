@@ -1705,195 +1705,172 @@ function checkResultPassword() {
 
 function renderResults() {
     const container = document.getElementById('results-inner');
-    if (!container) return; 
+    if (!container) return; [cite: 362]
 
     // --- 1. VERİ ANALİZİ ---
-    const stats = { logo: {}, sinif: {}, neden: {}, logoNedenleri: {}, yildiz: 0 }; 
-    const genderBreakdown = { 'Kız': {}, 'Erkek': {} }; 
-    const classBreakdown = {}; 
-    const externalStats = { 'Mezun': {}, 'Diğer': {} }; 
-    const cmpTotals = {}; 
+    const stats = { logo: {}, sinif: {}, neden: {}, logoNedenleri: {}, yildiz: 0 }; [cite: 363]
+    const genderBreakdown = { 'Kız': {}, 'Erkek': {} }; [cite: 364]
+    const classBreakdown = {}; [cite: 365]
+    const externalStats = { 'Mezun': {}, 'Diğer': {} }; [cite: 365]
+    const cmpTotals = {}; [cite: 365]
     
-    let activeStudentCount = 0; 
+    let activeStudentCount = 0; [cite: 366]
 
     state.votes.forEach(v => {
         try {
-            let s = v.sinif || ""; 
+            let s = v.sinif || ""; [cite: 366]
             
-            // YAZIM HATASI DÜZELTME: "Dier" olarak gelen veriyi "Diğer" yapar
+            // "Dier" yazım hatasını "Diğer" olarak düzeltir
             if (s === "Dier") s = "Diğer";
 
-            // FİLTRELEME: Mezun veya Diğer ise ana istatistiklere dahil etme
-            if (s.includes("Mezun") || s.includes("Diğer")) { 
-                const key = s.includes("Mezun") ? "Mezun" : "Diğer"; 
-                if (v.logo) { 
-                    if (!externalStats[key][v.logo]) externalStats[key][v.logo] = 0; 
-                    externalStats[key][v.logo]++; 
+            // FİLTRELEME: Mezun veya Diğer ise ana istatistiklere (Oy Dağılımı, Düello vb.) dahil etme
+            if (s.includes("Mezun") || s.includes("Diğer")) { [cite: 366]
+                const key = s.includes("Mezun") ? "Mezun" : "Diğer"; [cite: 367]
+                if (v.logo) { [cite: 367]
+                    if (!externalStats[key][v.logo]) externalStats[key][v.logo] = 0; [cite: 367]
+                    externalStats[key][v.logo]++; [cite: 368]
                 }
-                return; // Genel toplama (Lider, Puan, Düello) girmesini engeller 
+                return; // Bu oy genel toplama girmeden döngüden çıkar [cite: 368]
             }
 
-            // SADECE AKTİF ÖĞRENCİLER İÇİNDİR
-            activeStudentCount++; 
+            // BURADAN AŞAĞISI SADECE AKTİF ÖĞRENCİLER (9-12. Sınıf) İÇİNDİR
+            activeStudentCount++; [cite: 368]
             
-            if (v.logo) { 
-                stats.logo[v.logo] = (stats.logo[v.logo] || 0) + 1; 
-                if (v.neden) { 
-                    if (!stats.logoNedenleri[v.logo]) stats.logoNedenleri[v.logo] = {}; 
-                    stats.logoNedenleri[v.logo][v.neden] = (stats.logoNedenleri[v.logo][v.neden] || 0) + 1; 
+            if (v.logo) { [cite: 369]
+                stats.logo[v.logo] = (stats.logo[v.logo] || 0) + 1; [cite: 369]
+                if (v.neden) { [cite: 369]
+                    if (!stats.logoNedenleri[v.logo]) stats.logoNedenleri[v.logo] = {}; [cite: 369]
+                    stats.logoNedenleri[v.logo][v.neden] = (stats.logoNedenleri[v.logo][v.neden] || 0) + 1; [cite: 370]
                 }
             }
-            if (s) stats.sinif[s] = (stats.sinif[s] || 0) + 1; 
-            stats.yildiz += (Number(v.yildiz) || 0); 
+            if (s) stats.sinif[s] = (stats.sinif[s] || 0) + 1; [cite: 370]
+            stats.yildiz += (Number(v.yildiz) || 0); [cite: 371]
 
-            if (v.cmpWins) { 
-                let wins = (typeof v.cmpWins === 'string') ? JSON.parse(v.cmpWins) : v.cmpWins; 
-                if (wins && typeof wins === 'object') { 
-                    Object.entries(wins).forEach(([name, val]) => { 
-                        cmpTotals[name] = (cmpTotals[name] || 0) + Number(val); 
+            if (v.cmpWins) { [cite: 371]
+                let wins = (typeof v.cmpWins === 'string') ? JSON.parse(v.cmpWins) : v.cmpWins; [cite: 372]
+                if (wins && typeof wins === 'object') { [cite: 372]
+                    Object.entries(wins).forEach(([name, val]) => { [cite: 372]
+                        cmpTotals[name] = (cmpTotals[name] || 0) + Number(val); [cite: 372]
                     });
                 }
             }
 
-            let g = (v.cinsiyet || "").toString().toLowerCase().includes('erkek') ? 'Erkek' : 'Kız'; 
-            if (v.logo) { 
-                if (!genderBreakdown[g]) genderBreakdown[g] = {}; 
-                genderBreakdown[g][v.logo] = (genderBreakdown[g][v.logo] || 0) + 1; 
+            let g = (v.cinsiyet || "").toString().toLowerCase().includes('erkek') ? 'Erkek' : 'Kız'; [cite: 374]
+            if (v.logo) { [cite: 374]
+                if (!genderBreakdown[g]) genderBreakdown[g] = {}; [cite: 375]
+                genderBreakdown[g][v.logo] = (genderBreakdown[g][v.logo] || 0) + 1; [cite: 375]
             }
-            if (s && v.logo) { 
-                if (!classBreakdown[s]) classBreakdown[s] = {}; 
-                classBreakdown[s][v.logo] = (classBreakdown[s][v.logo] || 0) + 1; 
+            if (s && v.logo) { [cite: 375]
+                if (!classBreakdown[s]) classBreakdown[s] = {}; [cite: 376]
+                classBreakdown[s][v.logo] = (classBreakdown[s][v.logo] || 0) + 1; [cite: 376]
             }
         } catch (e) {}
     });
 
-    if (activeStudentCount === 0) {
-        container.innerHTML = '<div style="text-align:center;padding:4rem;color:#666;">Henüz aktif öğrenci oyu bulunmuyor.</div>'; [cite: 376]
-        return;
+    if (activeStudentCount === 0) { [cite: 377]
+        container.innerHTML = '<div style="text-align:center;padding:4rem;color:#666;">Henüz aktif öğrenci oyu bulunmuyor.</div>'; [cite: 377]
+        return; [cite: 378]
     }
 
-    const sortedLogos = Object.entries(stats.logo).sort((a, b) => b[1] - a[1]); [cite: 377]
-    const topLogoName = sortedLogos[0]?.[0] || '—'; [cite: 377]
-    const topLogoObj = state.logos.find(l => l.name === topLogoName) || {}; [cite: 378]
-    const avgRating = activeStudentCount > 0 ? (stats.yildiz / activeStudentCount).toFixed(1) : 0; [cite: 378, 379]
-    const sortedCmp = Object.entries(cmpTotals).sort((a, b) => b[1] - a[1]); [cite: 379]
+    const sortedLogos = Object.entries(stats.logo).sort((a, b) => b[1] - a[1]); [cite: 378]
+    const topLogoName = sortedLogos[0]?.[0] || '—'; [cite: 378]
+    const topLogoObj = state.logos.find(l => l.name === topLogoName) || {}; [cite: 379]
+    const avgRating = (stats.yildiz / activeStudentCount).toFixed(1); [cite: 379]
+    const sortedCmp = Object.entries(cmpTotals).sort((a, b) => b[1] - a[1]); [cite: 380]
 
     // --- 2. HTML İNŞA ---
-    
-    // BÖLÜM A: LİDER VE ÖZET KARTLARI (Görseldeki Üst Kısım)
     let html = `
         <div style="background: linear-gradient(135deg, #534AB7 0%, #764ba2 100%); padding: 20px; border-radius: 15px; color: white; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
             <div style="width: 70px; height: 70px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                ${topLogoObj.img ? `<img src="${topLogoObj.img}" style="max-width:90%;">` : '🏆'} [cite: 380, 381]
+                ${topLogoObj.img ? `<img src="${topLogoObj.img}" style="max-width:90%;">` : '🏆'}
             </div>
             <div>
-                <div style="font-size: 22px; font-weight: 800;">${topLogoName}</div> [cite: 381]
-                <div style="font-size: 13px; opacity: 0.9;">Öğrenci Favorisi | %${Math.round((stats.logo[topLogoName]/activeStudentCount)*100)} Tercih Oranı</div> [cite: 381, 382]
+                <div style="font-size: 22px; font-weight: 800;">${topLogoName}</div>
+                <div style="font-size: 13px; opacity: 0.9;">Öğrenci Favorisi | %${Math.round((stats.logo[topLogoName]/activeStudentCount)*100)} Tercih Oranı</div>
             </div>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 25px;">
             <div style="background: #FFF0F5; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #ffd1dc;">
-                <div style="font-size: 10px; font-weight: 800; color: #d81b60; text-transform: uppercase;">👧 Kızlar Favorisi</div> [cite: 382]
-                <div style="font-size: 16px; font-weight: 800; color: #333; margin-top: 4px;">${Object.entries(genderBreakdown['Kız'] || {}).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—'}</div> [cite: 383, 384]
+                <div style="font-size: 10px; font-weight: 800; color: #d81b60; text-transform: uppercase;">👧 Kızlar Favorisi</div>
+                <div style="font-size: 16px; font-weight: 800; color: #333; margin-top: 4px;">${Object.entries(genderBreakdown['Kız'] || {}).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—'}</div>
             </div>
             <div style="background: #E3F2FD; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #bbdefb;">
-                <div style="font-size: 10px; font-weight: 800; color: #1976d2; text-transform: uppercase;">👦 Erkekler Favorisi</div> [cite: 384]
-                <div style="font-size: 16px; font-weight: 800; color: #333; margin-top: 4px;">${Object.entries(genderBreakdown['Erkek'] || {}).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—'}</div> [cite: 384, 385]
+                <div style="font-size: 10px; font-weight: 800; color: #1976d2; text-transform: uppercase;">👦 Erkekler Favorisi</div>
+                <div style="font-size: 16px; font-weight: 800; color: #333; margin-top: 4px;">${Object.entries(genderBreakdown['Erkek'] || {}).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—'}</div>
             </div>
             <div style="background: white; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                <div style="font-size: 10px; color: #888; font-weight: 700; text-transform: uppercase;">Öğrenci Oyu / Puan</div> [cite: 385]
-                <div style="font-size: 16px; font-weight: 800; color: #534AB7; margin-top: 4px;">${activeStudentCount} Oy | ${avgRating}★</div> [cite: 385, 386]
+                <div style="font-size: 10px; color: #888; font-weight: 700; text-transform: uppercase;">Öğrenci Oyu / Puan</div>
+                <div style="font-size: 16px; font-weight: 800; color: #534AB7; margin-top: 4px;">${activeStudentCount} Oy | ${avgRating}★</div>
             </div>
         </div>
     `;
 
-    // BÖLÜM B: GENEL OY DAĞILIMI (Resimli Çubuklar)
+    // GENEL OY DAĞILIMI (Öğrenciler)
     html += `
         <div class="result-card" style="background: white; padding: 20px; border-radius: 15px; margin-bottom: 25px; border: 1px solid #eee;">
-            <div style="font-weight: 800; margin-bottom: 18px; color: #333; display: flex; align-items: center; gap: 8px;">📊 Genel Oy Dağılımı (Öğrenciler)</div> [cite: 387]
+            <div style="font-weight: 800; margin-bottom: 18px; color: #333; display: flex; align-items: center; gap: 8px;">📊 Genel Oy Dağılımı (Öğrenciler)</div>
             <div style="display: flex; flex-direction: column; gap: 14px;">
                 ${state.logos.map(l => {
-                    const votes = stats.logo[l.name] || 0; [cite: 388]
-                    const pct = activeStudentCount > 0 ? (votes / activeStudentCount) * 100 : 0; [cite: 388]
+                    const votes = stats.logo[l.name] || 0;
+                    const pct = activeStudentCount > 0 ? (votes / activeStudentCount) * 100 : 0;
                     return `
                         <div style="display: flex; align-items: center; gap: 12px;">
                             <div style="width: 30px; height: 30px; border-radius: 50%; border: 1px solid #eee; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #fff; flex-shrink: 0;">
-                                ${l.img ? `<img src="${l.img}" style="width: 100%; height: 100%; object-fit: contain;">` : '🖼️'} [cite: 389, 390]
+                                ${l.img ? `<img src="${l.img}" style="width: 100%; height: 100%; object-fit: contain;">` : '🖼️'}
                             </div>
-                            <div style="width: 50px; font-size: 11px; font-weight: 700; color: #534AB7;">${l.name}</div> [cite: 390]
+                            <div style="width: 50px; font-size: 11px; font-weight: 700; color: #534AB7;">${l.name}</div>
                             <div style="flex: 1; height: 8px; background: #f0f0f5; border-radius: 4px; overflow: hidden;">
-                                <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, #534AB7, #764ba2); border-radius: 4px;"></div> [cite: 391]
+                                <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, #534AB7, #764ba2); border-radius: 4px;"></div>
                             </div>
-                            <div style="width: 45px; text-align: right; font-size: 12px; font-weight: 700; color: #333;">${votes} Oy</div> [cite: 392]
+                            <div style="width: 45px; text-align: right; font-size: 12px; font-weight: 700; color: #333;">${votes} Oy</div>
                         </div>`;
                 }).join('')}
             </div>
         </div>
     `;
 
-    // BÖLÜM C: LOGO BAZLI NEDEN ANALİZİ (Görseldeki Nedenler Kısmı)
-    html += `
-        <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #eee;">
-            <div style="font-weight: 800; margin-bottom: 12px; color: #333; font-size: 14px;">🎯 Logo Tercih Nedenleri</div> [cite: 394]
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
-                ${sortedLogos.map(([logoName, voteCount]) => {
-                    const nedenler = stats.logoNedenleri[logoName] || {}; [cite: 395]
-                    return `
-                        <div style="background: #f8f8fb; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
-                            <div style="font-weight: 700; color: #534AB7; font-size: 12px; margin-bottom: 5px;">${logoName} (${voteCount} Oy)</div> [cite: 396]
-                            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-                                ${Object.entries(nedenler).map(([n, c]) => `
-                                    <span style="font-size: 10px; background: white; border: 1px solid #ddd; padding: 1px 6px; border-radius: 4px;">${n}: ${c}</span> [cite: 397, 398]
-                                `).join('')}
-                            </div>
-                        </div>`;
-                }).join('')}
-            </div>
-        </div>
-    `;
-
-    // BÖLÜM D: HARİCİ KATILIM RAPORU (Mezunlar İçin Özel Kutu)
+    // HARİCİ KATILIM RAPORU (Mezun ve Diğer)
     html += `
         <div class="result-card" style="background: #f4f4f9; border: 2px dashed #534AB7; padding: 20px; border-radius: 15px; margin-bottom: 25px;">
-            <div style="font-weight: 800; margin-bottom: 12px; color: #534AB7; font-size: 14px;">🎓 Mezun ve Diğer Katılımcılar (Öğrenci Toplamına Dahil Değildir)</div> [cite: 399, 401]
+            <div style="font-weight: 800; margin-bottom: 12px; color: #534AB7; font-size: 14px;">🎓 Mezun ve Diğer Katılımcılar (Öğrenci Toplamına Dahil Değildir)</div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                 ${['Mezun', 'Diğer'].map(key => {
-                    const groupVotes = externalStats[key] || {}; [cite: 402]
-                    const totalGroup = Object.values(groupVotes).reduce((a,b)=>a+b, 0); [cite: 402]
-                    const topEntry = Object.entries(groupVotes).sort((a,b)=>b[1]-a[1])[0] || ['—', 0]; [cite: 402]
+                    const groupVotes = externalStats[key] || {};
+                    const totalGroup = Object.values(groupVotes).reduce((a,b)=>a+b, 0);
+                    const topEntry = Object.entries(groupVotes).sort((a,b)=>b[1]-a[1])[0] || ['—', 0];
                     return `
                         <div style="background: white; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
-                            <div style="font-size: 11px; font-weight: 800; color: #666; text-transform: uppercase;">${key} (${totalGroup} Oy)</div> [cite: 403]
-                            <div style="font-size: 14px; font-weight: 700; color: #333; margin-top: 5px;">Favori: ${topEntry[0]}</div> [cite: 404]
+                            <div style="font-size: 11px; font-weight: 800; color: #666; text-transform: uppercase;">${key} (${totalGroup} Oy)</div>
+                            <div style="font-size: 14px; font-weight: 700; color: #333; margin-top: 5px;">Favori: ${topEntry[0]}</div>
                         </div>`;
                 }).join('')}
             </div>
         </div>
     `;
 
-    // BÖLÜM E: DÜELLOLAR VE SINIF LİDERLERİ (Görseldeki Alt Yan Yana Kısım)
+    // SINIF BAZLI LİDERLER VE DÜELLO SIRALAMASI
     html += `
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 25px;">
             <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
-                <div style="font-weight: 800; margin-bottom: 12px; font-size: 14px;">⚔️ Tüm Düello (VS) Sıralaması</div> [cite: 406, 408]
+                <div style="font-weight: 800; margin-bottom: 12px; font-size: 14px;">⚔️ Tüm Düello (VS) Sıralaması</div>
                 <div style="display: flex; flex-direction: column; gap: 6px; max-height: 300px; overflow-y: auto;">
                     ${sortedCmp.map(([name, wins], idx) => `
                         <div style="display: flex; justify-content: space-between; font-size: 12px; padding: 6px; background: #fcfcfc; border-radius: 6px; border: 1px solid #f0f0f0;">
-                            <span>${idx+1}. ${name}</span> [cite: 409, 410]
-                            <span style="font-weight: 700; color: #534AB7;">${wins} Galibiyet</span> [cite: 410]
+                            <span>${idx+1}. ${name}</span>
+                            <span style="font-weight: 700; color: #534AB7;">${wins} Galibiyet</span>
                         </div>
                     `).join('')}
                 </div>
             </div>
             <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
-                <div style="font-weight: 800; margin-bottom: 12px; font-size: 14px;">📏 Sınıf Bazlı Liderler</div> [cite: 412, 413]
+                <div style="font-weight: 800; margin-bottom: 12px; font-size: 14px;">📏 Sınıf Bazlı Liderler</div>
                 <div style="display: flex; flex-direction: column; gap: 6px;">
                     ${Object.keys(classBreakdown).sort((a,b)=>parseInt(a)-parseInt(b)).map(s => {
-                        const topInClass = Object.entries(classBreakdown[s]).sort((a,b)=>b[1]-a[1])[0]; [cite: 414]
+                        const topInClass = Object.entries(classBreakdown[s]).sort((a,b)=>b[1]-a[1])[0];
                         return `<div style="display: flex; justify-content: space-between; font-size: 12px; padding: 6px; border-bottom: 1px solid #f0f0f0;">
-                                <span style="font-weight: 700;">${s}</span> [cite: 415]
-                                <span style="color: #534AB7; font-weight: 600;">${topInClass ? topInClass[0] : '—'}</span> [cite: 415]
+                                <span style="font-weight: 700;">${s}</span>
+                                <span style="color: #534AB7; font-weight: 600;">${topInClass ? topInClass[0] : '—'}</span>
                             </div>`;
                     }).join('')}
                 </div>
@@ -1901,29 +1878,29 @@ function renderResults() {
         </div>
     `;
 
-    // BÖLÜM F: ÖĞRENCİ GÖRÜŞLERİ (Görseldeki En Alt Kısım)
-    const comments = state.votes.filter(v => v.yorum && v.yorum.trim() !== ""); [cite: 416]
+    // ÖĞRENCİ GÖRÜŞLERİ
+    const comments = state.votes.filter(v => v.yorum && v.yorum.trim() !== "");
     html += `
         <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
             <div style="font-weight: 800; margin-bottom: 12px; display: flex; justify-content: space-between;">
-                <span>💬 Öğrenci Görüşleri</span> [cite: 417, 418]
-                <span style="font-size: 11px; color: #888;">${comments.length} Mesaj</span> [cite: 419]
+                <span>💬 Öğrenci Görüşleri</span>
+                <span style="font-size: 11px; color: #888;">${comments.length} Mesaj</span>
             </div>
             <div style="max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
                 ${comments.slice().reverse().map(v => `
                     <div style="background: #fdfdfd; padding: 10px; border-radius: 8px; border-left: 4px solid #534AB7; border-top: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 11px;">
-                            <span style="font-weight: 800; color: #534AB7;">${v.logo} Favorisi</span> [cite: 421]
-                            <span style="color: #999;">${v.sinif || ''} | ${v.cinsiyet || ''}</span> [cite: 421]
+                            <span style="font-weight: 800; color: #534AB7;">${v.logo} Favorisi</span>
+                            <span style="color: #999;">${v.sinif || ''} | ${v.cinsiyet || ''}</span>
                         </div>
-                        <div style="font-size: 13px; color: #444; font-style: italic;">"${v.yorum}"</div> [cite: 422]
+                        <div style="font-size: 13px; color: #444; font-style: italic;">"${v.yorum}"</div>
                     </div>
                 `).join('')}
             </div>
         </div>
     `;
 
-    container.innerHTML = html; [cite: 422]
+    container.innerHTML = html;
 }
 // ==================== VERİ İHRACATI ====================
 
