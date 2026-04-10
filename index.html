@@ -1365,25 +1365,31 @@ function setLang(lang) {
 }
 
 function applyLanguage() {
-  const t = i18n[state.config.lang] || i18n.tr; [cite: 288]
+  const t = i18n[state.config.lang] || i18n.tr; // [cite: 288]
 
-  function buildOptions(containerId, options, key) { [cite: 288]
-    const container = document.getElementById(containerId); [cite: 289]
-    if (!container) return; [cite: 289]
+  function buildOptions(containerId, options, key) {
+    const container = document.getElementById(containerId); // [cite: 288]
+    if (!container) return; // [cite: 288]
     
-    container.innerHTML = ''; // Eski içeriği temizle 
+    container.innerHTML = ''; // Eski içeriği temizle [cite: 288]
     
-    options.forEach(opt => { [cite: 289]
-      const btn = document.createElement('button'); [cite: 289]
-      btn.className = 'opt-btn'; [cite: 289]
-      btn.type = 'button'; // Form submitini engellemek için
-      btn.textContent = opt; [cite: 290]
+    options.forEach(opt => {
+      const btn = document.createElement('button'); // [cite: 289]
+      btn.className = 'opt-btn'; // [cite: 289]
+      btn.type = 'button';
+      btn.textContent = opt; // [cite: 289]
       
-      // Sizin verdiğiniz selectOption fonksiyonunu tetikler
-      btn.onclick = () => selectOption(btn, key, opt); [cite: 290]
-      container.appendChild(btn); [cite: 290]
+      // selectOption fonksiyonunu doğrudan orijinal metinle çağırır [cite: 289]
+      btn.onclick = () => selectOption(btn, key, opt); 
+      container.appendChild(btn); // [cite: 289]
     });
   }
+  
+  // Container ID'lerine göre butonları inşa et [cite: 290]
+  buildOptions('opts-gender', t.gender, 'cinsiyet');
+  buildOptions('opts-class', t.class, 'sinif');
+  buildOptions('opts-reason', t.reason, 'neden');
+}
   
   // Container ID'lerine göre butonları inşa et [cite: 291]
   buildOptions('opts-gender', t.gender, 'cinsiyet'); [cite: 291]
