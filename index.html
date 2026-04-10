@@ -659,18 +659,17 @@ const state = {
 // Çeviriler
 const i18n = {
   tr: {
-    gender: ['👧 Kız', '👦 Erkek', '🤐 Belirtmek istemiyorum'],
-    // Mezun ve Diğer seçeneklerini buraya ekliyoruz:
-    class: ['9. Sınıf', '10. Sınıf', '11. Sınıf', '12. Sınıf', '🎓 Mezun', '🌐 Diğer'],
-    reason: ['🎨 Renk uyumu', '✨ Sadelik', '📖 Anlam', '🚀 Modern', '👕 Forma duruşu']
+    gender: ['Kız', 'Erkek', 'Belirtmek istemiyorum'],
+    // Emojileri kaldırdık, böylece "Diğer" kelimesi temizleme hatasına takılmaz:
+    class: ['9. Sınıf', '10. Sınıf', '11. Sınıf', '12. Sınıf', 'Mezun', 'Diğer'],
+    reason: ['Renk uyumu', 'Sadelik', 'Anlam', 'Modern', 'Forma duruşu']
   },
   en: {
-    gender: ['👧 Girl', '👦 Boy', '🤐 Prefer not to say'],
-    // İngilizce seçenekler için:
-    class: ['9th Grade', '10th Grade', '11th Grade', '12th Grade', '🎓 Alumnus', '🌐 Other'],
-    reason: ['🎨 Color', '✨ Simple', '📖 Meaning', '🚀 Modern', '👕 Uniform']
+    gender: ['Girl', 'Boy', 'Prefer not to say'],
+    class: ['9th Grade', '10th Grade', '11th Grade', '12th Grade', 'Alumnus', 'Other'],
+    reason: ['Color', 'Simple', 'Meaning', 'Modern', 'Uniform']
   }
-};
+}; [cite: 173, 174]
 // ==================== BAŞLATMA ====================
 
 document.addEventListener('DOMContentLoaded', function() {
