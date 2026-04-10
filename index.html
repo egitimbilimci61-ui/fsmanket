@@ -1707,21 +1707,32 @@ function renderResults() {
     const container = document.getElementById('results-inner');
     if (!container) return; 
 
-    const count = (state.votes && Array.isArray(state.votes)) ? state.votes.length : 0;
-
-    if (count === 0) {
-        container.innerHTML = '<div style="text-align:center;padding:4rem;color:#666;">Henüz oy bulunmuyor.</div>';
-        return;
-    }
-
     // --- 1. VERİ ANALİZİ ---
     const stats = { logo: {}, sinif: {}, neden: {}, logoNedenleri: {}, yildiz: 0 };
     const genderBreakdown = { 'Kız': {}, 'Erkek': {} };
     const classBreakdown = {};
+    const externalStats = { 'Mezun': {}, 'Diğer': {} }; // Mezun ve Diğer havuzu
     const cmpTotals = {}; 
+    
+    let activeStudentCount = 0; // Sadece 9-12. sınıfları saymak için
 
     state.votes.forEach(v => {
         try {
+            const s = v.sinif || "";
+            
+            // FİLTRELEME: Mezun veya Diğer ise ana istatistiklere dahil etme
+            if (s.includes("Mezun") || s.includes("Diğer")) {
+                const key = s.includes("Mezun") ? "Mezun" : "Diğer";
+                if (v.logo) {
+                    if (!externalStats[key][v.logo]) externalStats[key][v.logo] = 0;
+                    externalStats[key][v.logo]++;
+                }
+                return; // Bu oy genel toplama (Lider, Puan, Düello vb.) girmeyecek
+            }
+
+            // BURADAN AŞAĞISI SADECE AKTİF ÖĞRENCİLER İÇİNDİR
+            activeStudentCount++;
+            
             if (v.logo) {
                 stats.logo[v.logo] = (stats.logo[v.logo] || 0) + 1;
                 if (v.neden) {
@@ -1753,15 +1764,20 @@ function renderResults() {
         } catch (e) {}
     });
 
+    if (activeStudentCount === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:4rem;color:#666;">Henüz aktif öğrenci oyu bulunmuyor.</div>';
+        return;
+    }
+
     const sortedLogos = Object.entries(stats.logo).sort((a, b) => b[1] - a[1]);
     const topLogoName = sortedLogos[0]?.[0] || '—';
     const topLogoObj = state.logos.find(l => l.name === topLogoName) || {};
-    const avgRating = (stats.yildiz / count).toFixed(1);
+    const avgRating = activeStudentCount > 0 ? (stats.yildiz / activeStudentCount).toFixed(1) : 0;
     const sortedCmp = Object.entries(cmpTotals).sort((a, b) => b[1] - a[1]);
 
     // --- 2. HTML İNŞA ---
     
-    // BÖLÜM A: LİDER VE ÖZET KARTLARI
+    // BÖLÜM A: LİDER VE ÖZET KARTLARI (Görseldeki Üst Kısım)
     let html = `
         <div style="background: linear-gradient(135deg, #534AB7 0%, #764ba2 100%); padding: 20px; border-radius: 15px; color: white; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
             <div style="width: 70px; height: 70px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
@@ -1769,7 +1785,7 @@ function renderResults() {
             </div>
             <div>
                 <div style="font-size: 22px; font-weight: 800;">${topLogoName}</div>
-                <div style="font-size: 13px; opacity: 0.9;">Lider Logo | %${Math.round((stats.logo[topLogoName]/count)*100)} Tercih Oranı</div>
+                <div style="font-size: 13px; opacity: 0.9;">Öğrenci Favorisi | %${Math.round((stats.logo[topLogoName]/activeStudentCount)*100)} Tercih Oranı</div>
             </div>
         </div>
 
@@ -1783,20 +1799,20 @@ function renderResults() {
                 <div style="font-size: 16px; font-weight: 800; color: #333; margin-top: 4px;">${Object.entries(genderBreakdown['Erkek'] || {}).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—'}</div>
             </div>
             <div style="background: white; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                <div style="font-size: 10px; color: #888; font-weight: 700; text-transform: uppercase;">Toplam Oy / Puan</div>
-                <div style="font-size: 16px; font-weight: 800; color: #534AB7; margin-top: 4px;">${count} Oy | ${avgRating}★</div>
+                <div style="font-size: 10px; color: #888; font-weight: 700; text-transform: uppercase;">Öğrenci Oyu / Puan</div>
+                <div style="font-size: 16px; font-weight: 800; color: #534AB7; margin-top: 4px;">${activeStudentCount} Oy | ${avgRating}★</div>
             </div>
         </div>
     `;
 
-    // BÖLÜM B: GENEL OY DAĞILIMI (Resimli ve Çubuk Grafikli)
+    // BÖLÜM B: GENEL OY DAĞILIMI (Resimli Çubuklar)
     html += `
         <div class="result-card" style="background: white; padding: 20px; border-radius: 15px; margin-bottom: 25px; border: 1px solid #eee;">
-            <div style="font-weight: 800; margin-bottom: 18px; color: #333; display: flex; align-items: center; gap: 8px;">📊 Genel Oy Dağılımı</div>
+            <div style="font-weight: 800; margin-bottom: 18px; color: #333; display: flex; align-items: center; gap: 8px;">📊 Genel Oy Dağılımı (Öğrenciler)</div>
             <div style="display: flex; flex-direction: column; gap: 14px;">
                 ${state.logos.map(l => {
                     const votes = stats.logo[l.name] || 0;
-                    const pct = count > 0 ? (votes / count) * 100 : 0;
+                    const pct = activeStudentCount > 0 ? (votes / activeStudentCount) * 100 : 0;
                     return `
                         <div style="display: flex; align-items: center; gap: 12px;">
                             <div style="width: 30px; height: 30px; border-radius: 50%; border: 1px solid #eee; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #fff; flex-shrink: 0;">
@@ -1813,16 +1829,16 @@ function renderResults() {
         </div>
     `;
 
-    // BÖLÜM C: LOGO BAZLI NEDEN ANALİZİ
+    // BÖLÜM C: LOGO BAZLI NEDEN ANALİZİ (Görseldeki Nedenler Kısmı)
     html += `
         <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #eee;">
             <div style="font-weight: 800; margin-bottom: 12px; color: #333; font-size: 14px;">🎯 Logo Tercih Nedenleri</div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
                 ${sortedLogos.map(([logoName, voteCount]) => {
                     const nedenler = stats.logoNedenleri[logoName] || {};
                     return `
                         <div style="background: #f8f8fb; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
-                            <div style="font-weight: 700; color: #534AB7; font-size: 12px; margin-bottom: 5px;">${logoName}</div>
+                            <div style="font-weight: 700; color: #534AB7; font-size: 12px; margin-bottom: 5px;">${logoName} (${voteCount} Oy)</div>
                             <div style="display: flex; flex-wrap: wrap; gap: 4px;">
                                 ${Object.entries(nedenler).map(([n, c]) => `
                                     <span style="font-size: 10px; background: white; border: 1px solid #ddd; padding: 1px 6px; border-radius: 4px;">${n}: ${c}</span>
@@ -1834,7 +1850,26 @@ function renderResults() {
         </div>
     `;
 
-    // BÖLÜM D: VS SIRALAMASI VE SINIF LİDERLERİ
+    // BÖLÜM D: HARİCİ KATILIM RAPORU (Mezunlar İçin Özel Kutu)
+    html += `
+        <div class="result-card" style="background: #f4f4f9; border: 2px dashed #534AB7; padding: 20px; border-radius: 15px; margin-bottom: 25px;">
+            <div style="font-weight: 800; margin-bottom: 12px; color: #534AB7; font-size: 14px;">🎓 Mezun ve Diğer Katılımcılar (Öğrenci Toplamına Dahil Değildir)</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                ${['Mezun', 'Diğer'].map(key => {
+                    const groupVotes = externalStats[key] || {};
+                    const totalGroup = Object.values(groupVotes).reduce((a,b)=>a+b, 0);
+                    const topEntry = Object.entries(groupVotes).sort((a,b)=>b[1]-a[1])[0] || ['—', 0];
+                    return `
+                        <div style="background: white; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
+                            <div style="font-size: 11px; font-weight: 800; color: #666; text-transform: uppercase;">${key} (${totalGroup} Oy)</div>
+                            <div style="font-size: 14px; font-weight: 700; color: #333; margin-top: 5px;">Favori: ${topEntry[0]}</div>
+                        </div>`;
+                }).join('')}
+            </div>
+        </div>
+    `;
+
+    // BÖLÜM E: DÜELLOLAR VE SINIF LİDERLERİ (Görseldeki Alt Yan Yana Kısım)
     html += `
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 25px;">
             <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
@@ -1851,18 +1886,19 @@ function renderResults() {
             <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
                 <div style="font-weight: 800; margin-bottom: 12px; font-size: 14px;">📏 Sınıf Bazlı Liderler</div>
                 <div style="display: flex; flex-direction: column; gap: 6px;">
-                    ${Object.keys(classBreakdown).sort((a,b)=>parseInt(a)-parseInt(b)).map(s => `
-                        <div style="display: flex; justify-content: space-between; font-size: 12px; padding: 6px; border-bottom: 1px solid #f0f0f0;">
-                            <span style="font-weight: 700;">${s}</span>
-                            <span style="color: #534AB7; font-weight: 600;">${Object.entries(classBreakdown[s]).sort((a,b)=>b[1]-a[1])[0][0]}</span>
-                        </div>
-                    `).join('')}
+                    ${Object.keys(classBreakdown).sort((a,b)=>parseInt(a)-parseInt(b)).map(s => {
+                        const topInClass = Object.entries(classBreakdown[s]).sort((a,b)=>b[1]-a[1])[0];
+                        return `<div style="display: flex; justify-content: space-between; font-size: 12px; padding: 6px; border-bottom: 1px solid #f0f0f0;">
+                                <span style="font-weight: 700;">${s}</span>
+                                <span style="color: #534AB7; font-weight: 600;">${topInClass ? topInClass[0] : '—'}</span>
+                            </div>`;
+                    }).join('')}
                 </div>
             </div>
         </div>
     `;
 
-    // BÖLÜM E: YORUMLAR
+    // BÖLÜM F: ÖĞRENCİ GÖRÜŞLERİ (Görseldeki En Alt Kısım)
     const comments = state.votes.filter(v => v.yorum && v.yorum.trim() !== "");
     html += `
         <div class="result-card" style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #eee;">
@@ -1872,7 +1908,7 @@ function renderResults() {
             </div>
             <div style="max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
                 ${comments.slice().reverse().map(v => `
-                    <div style="background: #fdfdfd; padding: 10px; border-radius: 8px; border: 1px solid #f0f0f0; border-left: 4px solid #534AB7;">
+                    <div style="background: #fdfdfd; padding: 10px; border-radius: 8px; border-left: 4px solid #534AB7; border-top: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 11px;">
                             <span style="font-weight: 800; color: #534AB7;">${v.logo} Favorisi</span>
                             <span style="color: #999;">${v.sinif || ''} | ${v.cinsiyet || ''}</span>
