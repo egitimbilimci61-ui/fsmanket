@@ -1366,37 +1366,31 @@ function setLang(lang) {
 }
 
 function applyLanguage() {
-  const t = i18n[state.config.lang] || i18n.tr;
+  const t = i18n[state.config.lang] || i18n.tr; [cite: 288]
 
-  function buildOptions(containerId, options, key) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
+  function buildOptions(containerId, options, key) { [cite: 288]
+    const container = document.getElementById(containerId); [cite: 289]
+    if (!container) return; [cite: 289]
     
-    container.innerHTML = ''; // İçeriği temizle
+    container.innerHTML = ''; // Eski içeriği temizle 
     
-    options.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'opt-btn';
+    options.forEach(opt => { [cite: 289]
+      const btn = document.createElement('button'); [cite: 289]
+      btn.className = 'opt-btn'; [cite: 289]
       btn.type = 'button'; // Form submitini engellemek için
-      btn.textContent = opt;
+      btn.textContent = opt; [cite: 290]
       
-      // selectOption çağrılırken orijinal metni (opt) gönderiyoruz
-      btn.onclick = () => selectOption(btn, key, opt);
-      container.appendChild(btn);
+      // Sizin verdiğiniz selectOption fonksiyonunu tetikler
+      btn.onclick = () => selectOption(btn, key, opt); [cite: 290]
+      container.appendChild(btn); [cite: 290]
     });
   }
   
-  // Soruları oluştur
-  buildOptions('opts-gender', t.gender, 'cinsiyet');
-  buildOptions('opts-class', t.class, 'sinif');
-  buildOptions('opts-reason', t.reason, 'neden');
+  // Container ID'lerine göre butonları inşa et [cite: 291]
+  buildOptions('opts-gender', t.gender, 'cinsiyet'); [cite: 291]
+  buildOptions('opts-class', t.class, 'sinif'); [cite: 291]
+  buildOptions('opts-reason', t.reason, 'neden'); [cite: 291]
 }
-  
-  buildOptions('opts-gender', t.gender, 'cinsiyet');
-  buildOptions('opts-class', t.class, 'sinif');
-  buildOptions('opts-reason', t.reason, 'neden');
-}
-
 function selectOption(btn, key, value) {
   // Görsel seçim işlemleri (Orijinal yapı) [cite: 291, 292]
   btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
