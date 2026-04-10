@@ -1388,11 +1388,18 @@ function applyLanguage() {
 }
 
 function selectOption(btn, key, value) {
+  // 1. Görsel seçim mantığı (Orjinal: tüm butonlardan seçimi kaldır, buna ekle) 
   btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
   
-  state.pollData[key] = value;
+  // 2. VERİ DÜZELTME: Sadece emojileri temizle, metne dokunma 
+  // Bu regex "Diğer" kelimesindeki "ğ" harfini silmez, sadece başındaki simgeyi siler.
+  const cleanValue = value.replace(/[^\w\sğüşıöçĞÜŞİÖÇ.-]/gi, '').trim();
   
+  // 3. Değeri state'e aktar (Orjinal yapı) [cite: 172, 291]
+  state.pollData[key] = cleanValue;
+  
+  // 4. Adım ve buton kontrolü (Orjinal yapı) 
   const step = btn.closest('.step').id.replace('s', '');
   const nextBtn = document.getElementById('n' + step);
   if (nextBtn) nextBtn.disabled = false;
